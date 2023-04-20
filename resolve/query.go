@@ -3,13 +3,13 @@ package resolve
 import (
 	"fmt"
 
-	"codebdy.com/leda/services/models/consts"
 	"codebdy.com/leda/services/models/leda-shared/utils"
 	"codebdy.com/leda/services/models/service"
 	"github.com/codebdy/entify"
 	"github.com/codebdy/entify/model"
 	"github.com/codebdy/entify/model/graph"
 	"github.com/codebdy/entify/model/meta"
+	"github.com/codebdy/entify/model/observer/consts"
 	"github.com/graphql-go/graphql"
 )
 
