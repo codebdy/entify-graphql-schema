@@ -6,7 +6,7 @@ import (
 	"github.com/graphql-go/graphql"
 )
 
-type AppGraphqlSchema struct {
+type MetaGraphqlSchema struct {
 	QueryFields    []*graphql.Field
 	MutationFields []*graphql.Field
 	Directives     []*graphql.Directive
@@ -19,13 +19,13 @@ type MetaProcessor struct {
 	modelParser parser.ModelParser
 }
 
-func New(r *entify.Repository) AppGraphqlSchema {
+func New(r *entify.Repository) MetaGraphqlSchema {
 	processor := &MetaProcessor{
 		Repo: r,
 	}
 
 	processor.modelParser.ParseModel(r)
-	return AppGraphqlSchema{
+	return MetaGraphqlSchema{
 		QueryFields:    processor.QueryFields(),
 		MutationFields: processor.mutationFields(),
 		Types:          processor.modelParser.EntityTypes(),
@@ -33,10 +33,10 @@ func New(r *entify.Repository) AppGraphqlSchema {
 	}
 }
 
-func (s *AppGraphqlSchema) Parser() *parser.ModelParser {
+func (s *MetaGraphqlSchema) Parser() *parser.ModelParser {
 	return &s.proccessor.modelParser
 }
 
-func (s *AppGraphqlSchema) OutputType(name string) graphql.Type {
+func (s *MetaGraphqlSchema) OutputType(name string) graphql.Type {
 	return s.proccessor.modelParser.OutputType(name)
 }
