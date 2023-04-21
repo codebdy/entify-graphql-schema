@@ -1,44 +1,14 @@
 package schema
 
 import (
-	"codebdy.com/leda/services/models/consts"
-	"codebdy.com/leda/services/models/leda-shared/scalars"
-	"codebdy.com/leda/services/models/modules/app/resolve"
+	"github.com/codebdy/entify-graphql-schema/resolve"
 	"github.com/codebdy/entify/model/graph"
+	"github.com/codebdy/entify/model/observer/consts"
 	"github.com/graphql-go/graphql"
 )
 
 func (a *AppProcessor) mutationFields() []*graphql.Field {
 	mutationFields := graphql.Fields{}
-
-	mutationFields[consts.UPLOAD] = &graphql.Field{
-		Type: graphql.String,
-		Args: graphql.FieldConfigArgument{
-			consts.ARG_FILE: &graphql.ArgumentConfig{
-				Type: &graphql.NonNull{
-					OfType: scalars.UploadType,
-				},
-			},
-		},
-		Resolve: resolve.UploadResolveResolve,
-	}
-
-	mutationFields[UPLOAD_ZIP] = &graphql.Field{
-		Type: graphql.String,
-		Args: graphql.FieldConfigArgument{
-			consts.ARG_FILE: &graphql.ArgumentConfig{
-				Type: &graphql.NonNull{
-					OfType: scalars.UploadType,
-				},
-			},
-			consts.ARG_FOLDER: &graphql.ArgumentConfig{
-				Type: &graphql.NonNull{
-					OfType: graphql.String,
-				},
-			},
-		},
-		Resolve: resolve.UploadZipResolveResolve,
-	}
 
 	for _, entity := range a.Repo.Model.Graph.RootEnities() {
 		if entity.Domain.Root {

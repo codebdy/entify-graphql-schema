@@ -3,19 +3,19 @@ package resolve
 import (
 	"fmt"
 
-	"codebdy.com/leda/services/models/leda-shared/utils"
-	"codebdy.com/leda/services/models/service"
 	"github.com/codebdy/entify"
 	"github.com/codebdy/entify/model"
 	"github.com/codebdy/entify/model/graph"
 	"github.com/codebdy/entify/model/meta"
 	"github.com/codebdy/entify/model/observer/consts"
+	"github.com/codebdy/entify/service"
+	"github.com/codebdy/entify/shared"
 	"github.com/graphql-go/graphql"
 )
 
 func QueryOneEntityResolveFn(entityName string, r *entify.Repository) graphql.FieldResolveFn {
 	return func(p graphql.ResolveParams) (interface{}, error) {
-		defer utils.PrintErrorStack()
+		defer shared.PrintErrorStack()
 		s := service.New(p.Context, r)
 		instance := s.QueryOneEntity(entityName, p.Args)
 		return instance, nil
@@ -24,7 +24,7 @@ func QueryOneEntityResolveFn(entityName string, r *entify.Repository) graphql.Fi
 
 func QueryEntityResolveFn(entityName string, r *entify.Repository) graphql.FieldResolveFn {
 	return func(p graphql.ResolveParams) (interface{}, error) {
-		defer utils.PrintErrorStack()
+		defer shared.PrintErrorStack()
 		s := service.New(p.Context, r)
 		fields := parseListFields(p.Info)
 		result := s.QueryEntity(entityName, p.Args, fields)
@@ -42,7 +42,7 @@ func QueryAssociationFn(asso *graph.Association, r *entify.Repository) graphql.F
 				return fmt.Errorf(err.Error())
 			}
 		)
-		defer utils.PrintErrorStack()
+		defer shared.PrintErrorStack()
 
 		if loaders == nil {
 			panic("Data loaders is nil")
@@ -72,7 +72,7 @@ func QueryAssociationFn(asso *graph.Association, r *entify.Repository) graphql.F
 
 func AttributeResolveFn(attr *graph.Attribute, model *model.Model) graphql.FieldResolveFn {
 	return func(p graphql.ResolveParams) (interface{}, error) {
-		defer utils.PrintErrorStack()
+		defer shared.PrintErrorStack()
 		source := p.Source.(map[string]interface{})
 		if attr.Type == meta.PASSWORD {
 			return nil, nil

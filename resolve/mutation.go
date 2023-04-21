@@ -3,19 +3,18 @@ package resolve
 import (
 	"log"
 
-	"codebdy.com/leda/services/models/leda-shared/utils"
-	"codebdy.com/leda/services/models/service"
 	"github.com/codebdy/entify"
 	"github.com/codebdy/entify/model/data"
 	"github.com/codebdy/entify/model/observer"
 	"github.com/codebdy/entify/model/observer/consts"
+	"github.com/codebdy/entify/service"
 	"github.com/codebdy/entify/shared"
 	"github.com/graphql-go/graphql"
 )
 
 func PostResolveFn(entityName string, r *entify.Repository) graphql.FieldResolveFn {
 	return func(p graphql.ResolveParams) (interface{}, error) {
-		defer utils.PrintErrorStack()
+		defer shared.PrintErrorStack()
 		objects := p.Args[consts.ARG_OBJECTS].([]map[string]interface{})
 
 		s := service.New(p.Context, r)
@@ -32,7 +31,7 @@ func PostResolveFn(entityName string, r *entify.Repository) graphql.FieldResolve
 //未实现
 func SetResolveFn(entityName string, r *entify.Repository) graphql.FieldResolveFn {
 	return func(p graphql.ResolveParams) (interface{}, error) {
-		defer utils.PrintErrorStack()
+		defer shared.PrintErrorStack()
 		s := service.New(p.Context, r)
 		objs := s.QueryEntity(entityName, p.Args, []string{}).Nodes
 		convertedObjs := objs
@@ -65,7 +64,7 @@ func SetResolveFn(entityName string, r *entify.Repository) graphql.FieldResolveF
 
 func PostOneResolveFn(entityName string, r *entify.Repository) graphql.FieldResolveFn {
 	return func(p graphql.ResolveParams) (interface{}, error) {
-		defer utils.PrintErrorStack()
+		defer shared.PrintErrorStack()
 		object := p.Args[consts.ARG_OBJECT].(map[string]interface{})
 		data.ConvertObjectId(object)
 
@@ -78,7 +77,7 @@ func PostOneResolveFn(entityName string, r *entify.Repository) graphql.FieldReso
 
 func DeleteByIdResolveFn(entityName string, r *entify.Repository) graphql.FieldResolveFn {
 	return func(p graphql.ResolveParams) (interface{}, error) {
-		defer utils.PrintErrorStack()
+		defer shared.PrintErrorStack()
 		argId := p.Args[consts.ID]
 
 		s := service.New(p.Context, r)
@@ -90,7 +89,7 @@ func DeleteByIdResolveFn(entityName string, r *entify.Repository) graphql.FieldR
 
 func DeleteResolveFn(entityName string, r *entify.Repository) graphql.FieldResolveFn {
 	return func(p graphql.ResolveParams) (interface{}, error) {
-		defer utils.PrintErrorStack()
+		defer shared.PrintErrorStack()
 		s := service.New(p.Context, r)
 		objs := s.QueryEntity(entityName, p.Args, []string{consts.ID}).Nodes
 

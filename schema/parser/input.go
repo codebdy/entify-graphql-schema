@@ -3,8 +3,8 @@ package parser
 import (
 	"fmt"
 
-	"codebdy.com/leda/services/models/consts"
 	"github.com/codebdy/entify/model/graph"
+	"github.com/codebdy/entify/model/observer/consts"
 	"github.com/graphql-go/graphql"
 )
 

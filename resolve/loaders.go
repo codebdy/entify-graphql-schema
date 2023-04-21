@@ -4,12 +4,11 @@ import (
 	"context"
 	"fmt"
 
-	"codebdy.com/leda/services/models/consts"
-	"codebdy.com/leda/services/models/contexts"
-	"codebdy.com/leda/services/models/leda-shared/utils"
-	"codebdy.com/leda/services/models/service"
 	"github.com/codebdy/entify"
 	"github.com/codebdy/entify/model/graph"
+	"github.com/codebdy/entify/model/observer/consts"
+	"github.com/codebdy/entify/service"
+	"github.com/codebdy/entify/shared"
 	"github.com/graph-gophers/dataloader"
 	"github.com/graphql-go/graphql"
 )
@@ -43,8 +42,8 @@ func CreateDataLoaders() *Loaders {
 }
 
 func (l *Loaders) GetLoader(p graphql.ResolveParams, association *graph.Association, args graph.QueryArg, r *entify.Repository) *dataloader.Loader {
-	contextValues := contexts.Values(p.Context)
-	loaderId := fmt.Sprintf("%s@%d", association.Path(), contextValues.AppId)
+	metaId := p.Context.Value(consts.META_ID)
+	loaderId := fmt.Sprintf("%s@%d", association.Path(), metaId)
 	if l.loaders[loaderId] == nil {
 		l.loaders[loaderId] = dataloader.NewBatchedLoader(QueryBatchFn(p, association, args, r))
 	}
@@ -53,7 +52,7 @@ func (l *Loaders) GetLoader(p graphql.ResolveParams, association *graph.Associat
 
 func QueryBatchFn(p graphql.ResolveParams, association *graph.Association, args graph.QueryArg, r *entify.Repository) dataloader.BatchFunc {
 	return func(ctx context.Context, keys dataloader.Keys) []*dataloader.Result {
-		defer utils.PrintErrorStack()
+		defer shared.PrintErrorStack()
 		results := make([]*dataloader.Result, len(keys))
 		ids := make([]uint64, len(keys))
 		for i := range ids {

@@ -1,7 +1,7 @@
 package parser
 
 import (
-	"codebdy.com/leda/services/models/consts"
+	"github.com/codebdy/entify-graphql-schema/consts"
 	"github.com/codebdy/entify/model/domain"
 	"github.com/codebdy/entify/model/graph"
 	"github.com/codebdy/entify/model/meta"

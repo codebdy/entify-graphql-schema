@@ -1,8 +1,8 @@
 package schema
 
 import (
-	"codebdy.com/leda/services/models/modules/app/schema/parser"
 	"github.com/codebdy/entify"
+	"github.com/codebdy/entify-graphql-schema/schema/parser"
 	"github.com/graphql-go/graphql"
 )
 

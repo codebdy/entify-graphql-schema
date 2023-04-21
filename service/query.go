@@ -3,8 +3,8 @@ package service
 import (
 	"log"
 
-	"codebdy.com/leda/services/models/consts"
 	"github.com/codebdy/entify/model/graph"
+	"github.com/codebdy/entify/model/observer/consts"
 	"github.com/codebdy/entify/orm"
 )
 

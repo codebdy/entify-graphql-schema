@@ -1,11 +1,11 @@
 package parser
 
 import (
-	"codebdy.com/leda/services/models/consts"
-	"codebdy.com/leda/services/models/leda-shared/utils"
 	"github.com/codebdy/entify"
 	"github.com/codebdy/entify/model"
 	"github.com/codebdy/entify/model/graph"
+	"github.com/codebdy/entify/model/observer/consts"
+	"github.com/codebdy/entify/shared"
 	"github.com/graphql-go/graphql"
 )
 
@@ -181,7 +181,7 @@ func (p *ModelParser) InterfaceType(intf *graph.Interface) *graphql.Interface {
 func (p *ModelParser) resolveTypeFn(parm graphql.ResolveTypeParams) *graphql.Object {
 	if value, ok := parm.Value.(map[string]interface{}); ok {
 		if id, ok := value[consts.ID].(uint64); ok {
-			entityInnerId := utils.DecodeEntityInnerId(id)
+			entityInnerId := shared.DecodeEntityInnerId(id)
 			return p.GetEntityTypeByInnerId(entityInnerId)
 		}
 	}
