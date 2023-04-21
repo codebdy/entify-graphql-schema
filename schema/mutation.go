@@ -7,7 +7,7 @@ import (
 	"github.com/graphql-go/graphql"
 )
 
-func (a *AppProcessor) mutationFields() []*graphql.Field {
+func (a *MetaProcessor) mutationFields() []*graphql.Field {
 	mutationFields := graphql.Fields{}
 
 	for _, entity := range a.Repo.Model.Graph.RootEnities() {
@@ -19,7 +19,7 @@ func (a *AppProcessor) mutationFields() []*graphql.Field {
 	return convertFieldsArray(mutationFields)
 }
 
-func (a *AppProcessor) deleteArgs(entity *graph.Entity) graphql.FieldConfigArgument {
+func (a *MetaProcessor) deleteArgs(entity *graph.Entity) graphql.FieldConfigArgument {
 	return graphql.FieldConfigArgument{
 		consts.ARG_WHERE: &graphql.ArgumentConfig{
 			Type: a.modelParser.WhereExp(entity.Name()),
@@ -35,7 +35,7 @@ func deleteByIdArgs() graphql.FieldConfigArgument {
 	}
 }
 
-func (a *AppProcessor) upsertArgs(entity *graph.Entity) graphql.FieldConfigArgument {
+func (a *MetaProcessor) upsertArgs(entity *graph.Entity) graphql.FieldConfigArgument {
 	return graphql.FieldConfigArgument{
 		consts.ARG_OBJECTS: &graphql.ArgumentConfig{
 			Type: &graphql.NonNull{
@@ -49,7 +49,7 @@ func (a *AppProcessor) upsertArgs(entity *graph.Entity) graphql.FieldConfigArgum
 	}
 }
 
-func (a *AppProcessor) upsertOneArgs(entity *graph.Entity) graphql.FieldConfigArgument {
+func (a *MetaProcessor) upsertOneArgs(entity *graph.Entity) graphql.FieldConfigArgument {
 	return graphql.FieldConfigArgument{
 		consts.ARG_OBJECT: &graphql.ArgumentConfig{
 			Type: &graphql.NonNull{
@@ -59,7 +59,7 @@ func (a *AppProcessor) upsertOneArgs(entity *graph.Entity) graphql.FieldConfigAr
 	}
 }
 
-func (a *AppProcessor) setArgs(entity *graph.Entity) graphql.FieldConfigArgument {
+func (a *MetaProcessor) setArgs(entity *graph.Entity) graphql.FieldConfigArgument {
 	updateInput := a.modelParser.SetInput(entity.Name())
 	return graphql.FieldConfigArgument{
 		consts.ARG_SET: &graphql.ArgumentConfig{
@@ -73,7 +73,7 @@ func (a *AppProcessor) setArgs(entity *graph.Entity) graphql.FieldConfigArgument
 	}
 }
 
-func (a *AppProcessor) appendEntityMutationToFields(entity *graph.Entity, feilds graphql.Fields) {
+func (a *MetaProcessor) appendEntityMutationToFields(entity *graph.Entity, feilds graphql.Fields) {
 	(feilds)[entity.DeleteName()] = &graphql.Field{
 		Type:    a.modelParser.MutationResponse(entity.Name()),
 		Args:    a.deleteArgs(entity),

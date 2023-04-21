@@ -11,16 +11,16 @@ type AppGraphqlSchema struct {
 	MutationFields []*graphql.Field
 	Directives     []*graphql.Directive
 	Types          []graphql.Type
-	proccessor     *AppProcessor
+	proccessor     *MetaProcessor
 }
 
-type AppProcessor struct {
+type MetaProcessor struct {
 	Repo        *entify.Repository
 	modelParser parser.ModelParser
 }
 
 func New(r *entify.Repository) AppGraphqlSchema {
-	processor := &AppProcessor{
+	processor := &MetaProcessor{
 		Repo: r,
 	}
 

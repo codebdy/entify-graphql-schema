@@ -6,7 +6,7 @@ import (
 	"github.com/graphql-go/graphql"
 )
 
-func (a *AppProcessor) QueryFields() []*graphql.Field {
+func (a *MetaProcessor) QueryFields() []*graphql.Field {
 	queryFields := graphql.Fields{}
 
 	for _, entity := range a.Repo.Model.Graph.RootEnities() {
@@ -15,14 +15,14 @@ func (a *AppProcessor) QueryFields() []*graphql.Field {
 	return convertFieldsArray(queryFields)
 }
 
-func (a *AppProcessor) EntityQueryResponseType(entity *graph.Entity) graphql.Output {
+func (a *MetaProcessor) EntityQueryResponseType(entity *graph.Entity) graphql.Output {
 	return a.modelParser.EntityListType(entity)
 }
-func (a *AppProcessor) ClassQueryResponseType(cls *graph.Class) graphql.Output {
+func (a *MetaProcessor) ClassQueryResponseType(cls *graph.Class) graphql.Output {
 	return a.modelParser.ClassListType(cls)
 }
 
-func (a *AppProcessor) appendEntityToQueryFields(entity *graph.Entity, fields graphql.Fields) {
+func (a *MetaProcessor) appendEntityToQueryFields(entity *graph.Entity, fields graphql.Fields) {
 	(fields)[entity.QueryName()] = &graphql.Field{
 		Type:    a.EntityQueryResponseType(entity),
 		Args:    a.modelParser.QueryArgs(entity.Name()),
