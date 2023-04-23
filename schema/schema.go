@@ -40,3 +40,13 @@ func (s *MetaGraphqlSchema) Parser() *parser.ModelParser {
 func (s *MetaGraphqlSchema) OutputType(name string) graphql.Type {
 	return s.proccessor.modelParser.OutputType(name)
 }
+
+func ConvertArrayFields(fields []*graphql.Field) graphql.Fields {
+	graphqlFields := graphql.Fields{}
+	for i := range fields {
+		field := fields[i]
+		graphqlFields[field.Name] = field
+	}
+
+	return graphqlFields
+}
