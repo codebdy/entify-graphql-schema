@@ -4,7 +4,6 @@ go 1.18
 
 require (
 	github.com/dlclark/regexp2 v1.7.0 // indirect
-	github.com/dop251/goja v0.0.0-20230402114112-623f9dda9079 // indirect
 	github.com/gertd/go-pluralize v0.2.1 // indirect
 	github.com/go-sourcemap/sourcemap v2.1.3+incompatible // indirect
 	github.com/go-sql-driver/mysql v1.7.0 // indirect
@@ -17,6 +16,7 @@ require (
 
 require (
 	github.com/codebdy/entify v0.0.5
+	github.com/dop251/goja v0.0.0-20230402114112-623f9dda9079
 	github.com/graph-gophers/dataloader v5.0.0+incompatible
 	github.com/graphql-go/graphql v0.8.1
 )
