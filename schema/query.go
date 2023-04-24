@@ -3,35 +3,51 @@ package schema
 import (
 	"github.com/codebdy/entify-graphql-schema/resolve"
 	"github.com/codebdy/entify/model/graph"
+	"github.com/codebdy/entify/model/meta"
+	"github.com/codebdy/entify/shared"
 	"github.com/graphql-go/graphql"
 )
 
-func (a *MetaProcessor) QueryFields() []*graphql.Field {
+func (m *MetaProcessor) QueryFields() []*graphql.Field {
 	queryFields := graphql.Fields{}
 
-	for _, entity := range a.Repo.Model.Graph.RootEnities() {
-		a.appendEntityToQueryFields(entity, queryFields)
+	for _, entity := range m.Repo.Model.Graph.RootEnities() {
+		m.appendEntityToQueryFields(entity, queryFields)
+	}
+
+	for _, scripts := range m.Repo.Model.Meta.ScriptLogics {
+		if scripts.OperateType == shared.QUERY {
+			m.appendMethodsToFields(scripts, queryFields)
+		}
 	}
 	return convertFieldsArray(queryFields)
 }
 
-func (a *MetaProcessor) EntityQueryResponseType(entity *graph.Entity) graphql.Output {
-	return a.modelParser.EntityListType(entity)
+func (m *MetaProcessor) EntityQueryResponseType(entity *graph.Entity) graphql.Output {
+	return m.modelParser.EntityListType(entity)
 }
-func (a *MetaProcessor) ClassQueryResponseType(cls *graph.Class) graphql.Output {
-	return a.modelParser.ClassListType(cls)
+func (m *MetaProcessor) ClassQueryResponseType(cls *graph.Class) graphql.Output {
+	return m.modelParser.ClassListType(cls)
 }
 
-func (a *MetaProcessor) appendEntityToQueryFields(entity *graph.Entity, fields graphql.Fields) {
+func (m *MetaProcessor) appendEntityToQueryFields(entity *graph.Entity, fields graphql.Fields) {
 	(fields)[entity.QueryName()] = &graphql.Field{
-		Type:    a.EntityQueryResponseType(entity),
-		Args:    a.modelParser.QueryArgs(entity.Name()),
-		Resolve: resolve.QueryEntityResolveFn(entity.Name(), a.Repo),
+		Type:    m.EntityQueryResponseType(entity),
+		Args:    m.modelParser.QueryArgs(entity.Name()),
+		Resolve: resolve.QueryEntityResolveFn(entity.Name(), m.Repo),
 	}
 	(fields)[entity.QueryOneName()] = &graphql.Field{
-		Type:    a.modelParser.OutputType(entity.Name()),
-		Args:    a.modelParser.QueryArgs(entity.Name()),
-		Resolve: resolve.QueryOneEntityResolveFn(entity.Name(), a.Repo),
+		Type:    m.modelParser.OutputType(entity.Name()),
+		Args:    m.modelParser.QueryArgs(entity.Name()),
+		Resolve: resolve.QueryOneEntityResolveFn(entity.Name(), m.Repo),
 	}
+}
 
+func (m *MetaProcessor) appendMethodsToFields(method *meta.MethodMeta, fields graphql.Fields) {
+	fields[method.Name] = &graphql.Field{
+		Type:        m.modelParser.MethodType(method),
+		Args:        m.modelParser.MethodArgs(method.Args),
+		Description: method.Description,
+		Resolve:     resolve.ScriptMethodResolveFn(method.LogicScript, method.Args, m.Repo),
+	}
 }

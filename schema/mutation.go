@@ -4,25 +4,30 @@ import (
 	"github.com/codebdy/entify-graphql-schema/resolve"
 	"github.com/codebdy/entify/model/graph"
 	"github.com/codebdy/entify/model/observer/consts"
+	"github.com/codebdy/entify/shared"
 	"github.com/graphql-go/graphql"
 )
 
-func (a *MetaProcessor) mutationFields() []*graphql.Field {
+func (m *MetaProcessor) mutationFields() []*graphql.Field {
 	mutationFields := graphql.Fields{}
 
-	for _, entity := range a.Repo.Model.Graph.RootEnities() {
+	for _, entity := range m.Repo.Model.Graph.RootEnities() {
 		if entity.Domain.Root {
-			a.appendEntityMutationToFields(entity, mutationFields)
+			m.appendEntityMutationToFields(entity, mutationFields)
 		}
 	}
-
+	for _, scripts := range m.Repo.Model.Meta.ScriptLogics {
+		if scripts.OperateType == shared.MUTATION {
+			m.appendMethodsToFields(scripts, mutationFields)
+		}
+	}
 	return convertFieldsArray(mutationFields)
 }
 
-func (a *MetaProcessor) deleteArgs(entity *graph.Entity) graphql.FieldConfigArgument {
+func (m *MetaProcessor) deleteArgs(entity *graph.Entity) graphql.FieldConfigArgument {
 	return graphql.FieldConfigArgument{
 		consts.ARG_WHERE: &graphql.ArgumentConfig{
-			Type: a.modelParser.WhereExp(entity.Name()),
+			Type: m.modelParser.WhereExp(entity.Name()),
 		},
 	}
 }
@@ -35,13 +40,13 @@ func deleteByIdArgs() graphql.FieldConfigArgument {
 	}
 }
 
-func (a *MetaProcessor) upsertArgs(entity *graph.Entity) graphql.FieldConfigArgument {
+func (m *MetaProcessor) upsertArgs(entity *graph.Entity) graphql.FieldConfigArgument {
 	return graphql.FieldConfigArgument{
 		consts.ARG_OBJECTS: &graphql.ArgumentConfig{
 			Type: &graphql.NonNull{
 				OfType: &graphql.List{
 					OfType: &graphql.NonNull{
-						OfType: a.modelParser.SaveInput(entity.Name()),
+						OfType: m.modelParser.SaveInput(entity.Name()),
 					},
 				},
 			},
@@ -49,18 +54,18 @@ func (a *MetaProcessor) upsertArgs(entity *graph.Entity) graphql.FieldConfigArgu
 	}
 }
 
-func (a *MetaProcessor) upsertOneArgs(entity *graph.Entity) graphql.FieldConfigArgument {
+func (m *MetaProcessor) upsertOneArgs(entity *graph.Entity) graphql.FieldConfigArgument {
 	return graphql.FieldConfigArgument{
 		consts.ARG_OBJECT: &graphql.ArgumentConfig{
 			Type: &graphql.NonNull{
-				OfType: a.modelParser.SaveInput(entity.Name()),
+				OfType: m.modelParser.SaveInput(entity.Name()),
 			},
 		},
 	}
 }
 
-func (a *MetaProcessor) setArgs(entity *graph.Entity) graphql.FieldConfigArgument {
-	updateInput := a.modelParser.SetInput(entity.Name())
+func (m *MetaProcessor) setArgs(entity *graph.Entity) graphql.FieldConfigArgument {
+	updateInput := m.modelParser.SetInput(entity.Name())
 	return graphql.FieldConfigArgument{
 		consts.ARG_SET: &graphql.ArgumentConfig{
 			Type: &graphql.NonNull{
@@ -68,39 +73,39 @@ func (a *MetaProcessor) setArgs(entity *graph.Entity) graphql.FieldConfigArgumen
 			},
 		},
 		consts.ARG_WHERE: &graphql.ArgumentConfig{
-			Type: a.modelParser.WhereExp(entity.Name()),
+			Type: m.modelParser.WhereExp(entity.Name()),
 		},
 	}
 }
 
-func (a *MetaProcessor) appendEntityMutationToFields(entity *graph.Entity, feilds graphql.Fields) {
+func (m *MetaProcessor) appendEntityMutationToFields(entity *graph.Entity, feilds graphql.Fields) {
 	(feilds)[entity.DeleteName()] = &graphql.Field{
-		Type:    a.modelParser.MutationResponse(entity.Name()),
-		Args:    a.deleteArgs(entity),
-		Resolve: resolve.DeleteResolveFn(entity.Name(), a.Repo),
+		Type:    m.modelParser.MutationResponse(entity.Name()),
+		Args:    m.deleteArgs(entity),
+		Resolve: resolve.DeleteResolveFn(entity.Name(), m.Repo),
 	}
 	(feilds)[entity.DeleteByIdName()] = &graphql.Field{
-		Type:    a.modelParser.OutputType(entity.Name()),
+		Type:    m.modelParser.OutputType(entity.Name()),
 		Args:    deleteByIdArgs(),
-		Resolve: resolve.DeleteByIdResolveFn(entity.Name(), a.Repo),
+		Resolve: resolve.DeleteByIdResolveFn(entity.Name(), m.Repo),
 	}
 	(feilds)[entity.UpsertName()] = &graphql.Field{
-		Type:    &graphql.List{OfType: a.modelParser.OutputType(entity.Name())},
-		Args:    a.upsertArgs(entity),
-		Resolve: resolve.PostResolveFn(entity.Name(), a.Repo),
+		Type:    &graphql.List{OfType: m.modelParser.OutputType(entity.Name())},
+		Args:    m.upsertArgs(entity),
+		Resolve: resolve.PostResolveFn(entity.Name(), m.Repo),
 	}
 	(feilds)[entity.UpsertOneName()] = &graphql.Field{
-		Type:    a.modelParser.OutputType(entity.Name()),
-		Args:    a.upsertOneArgs(entity),
-		Resolve: resolve.PostOneResolveFn(entity.Name(), a.Repo),
+		Type:    m.modelParser.OutputType(entity.Name()),
+		Args:    m.upsertOneArgs(entity),
+		Resolve: resolve.PostOneResolveFn(entity.Name(), m.Repo),
 	}
 
-	updateInput := a.modelParser.SetInput(entity.Name())
+	updateInput := m.modelParser.SetInput(entity.Name())
 	if len(updateInput.Fields()) > 0 {
 		(feilds)[entity.SetName()] = &graphql.Field{
-			Type:    a.modelParser.MutationResponse(entity.Name()),
-			Args:    a.setArgs(entity),
-			Resolve: resolve.SetResolveFn(entity.Name(), a.Repo),
+			Type:    m.modelParser.MutationResponse(entity.Name()),
+			Args:    m.setArgs(entity),
+			Resolve: resolve.SetResolveFn(entity.Name(), m.Repo),
 		}
 	}
 }
