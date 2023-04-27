@@ -37,8 +37,18 @@ func (s *MetaGraphqlSchema) Parser() *parser.ModelParser {
 	return &s.proccessor.modelParser
 }
 
-func (s *MetaGraphqlSchema) OutputType(name string) graphql.Type {
-	return s.proccessor.modelParser.OutputType(name)
+func (s *MetaGraphqlSchema) ParseApi(resolver interface{}) {
+	queryFields := s.proccessor.QueryApiFields(resolver)
+
+	for name := range queryFields {
+		s.QueryFields[name] = queryFields[name]
+	}
+
+	mutationFields := s.proccessor.MutationApiFields(resolver)
+
+	for name := range mutationFields {
+		s.MutationFields[name] = mutationFields[name]
+	}
 }
 
 func ConvertArrayFields(fields []*graphql.Field) graphql.Fields {
