@@ -8,7 +8,7 @@ import (
 	"github.com/graphql-go/graphql"
 )
 
-func (m *MetaProcessor) mutationFields() []*graphql.Field {
+func (m *MetaProcessor) mutationFields() graphql.Fields {
 	mutationFields := graphql.Fields{}
 
 	for _, entity := range m.Repo.Model.Graph.RootEnities() {
@@ -21,7 +21,7 @@ func (m *MetaProcessor) mutationFields() []*graphql.Field {
 			m.appendMethodsToFields(scripts, mutationFields)
 		}
 	}
-	return convertFieldsArray(mutationFields)
+	return mutationFields
 }
 
 func (m *MetaProcessor) deleteArgs(entity *graph.Entity) graphql.FieldConfigArgument {

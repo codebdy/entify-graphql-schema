@@ -7,8 +7,8 @@ import (
 )
 
 type MetaGraphqlSchema struct {
-	QueryFields    []*graphql.Field
-	MutationFields []*graphql.Field
+	QueryFields    graphql.Fields
+	MutationFields graphql.Fields
 	Directives     []*graphql.Directive
 	Types          []graphql.Type
 	proccessor     *MetaProcessor

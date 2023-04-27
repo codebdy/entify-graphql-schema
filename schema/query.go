@@ -8,7 +8,7 @@ import (
 	"github.com/graphql-go/graphql"
 )
 
-func (m *MetaProcessor) QueryFields() []*graphql.Field {
+func (m *MetaProcessor) QueryFields() graphql.Fields {
 	queryFields := graphql.Fields{}
 
 	for _, entity := range m.Repo.Model.Graph.RootEnities() {
@@ -20,7 +20,7 @@ func (m *MetaProcessor) QueryFields() []*graphql.Field {
 			m.appendMethodsToFields(scripts, queryFields)
 		}
 	}
-	return convertFieldsArray(queryFields)
+	return queryFields
 }
 
 func (m *MetaProcessor) EntityQueryResponseType(entity *graph.Entity) graphql.Output {
