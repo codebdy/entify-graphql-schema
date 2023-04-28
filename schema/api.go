@@ -42,6 +42,9 @@ func (mp *MetaProcessor) appendApiToFields(method *meta.MethodMeta, fields graph
 			m := rv.MethodByName(op)
 			if m.IsValid() {
 				mt := m.Type()
+				if mt.NumIn() != len(method.Args) && mt.NumIn() != (len(method.Args)+1) {
+					return nil, fmt.Errorf("method %q of %v must accept less %d or %d arguments, got %d", op, rv.Type(), len(method.Args), len(method.Args)+1, mt.NumIn())
+				}
 				// if mt.NumIn() > 2 {
 				// 	return nil, fmt.Errorf("method %q of %v must accept less 2 arguments, got %d", op, rv.Type(), mt.NumIn())
 				// }
@@ -52,7 +55,14 @@ func (mp *MetaProcessor) appendApiToFields(method *meta.MethodMeta, fields graph
 				// if ot.Kind() != reflect.Pointer && ot.Kind() != reflect.Interface {
 				// 	return nil, fmt.Errorf("method %q of %v must return an interface or a pointer, got %+v", op, rv.Type(), ot)
 				// }
-				inputs := []reflect.Value{reflect.ValueOf(p)}
+				inputs := make([]reflect.Value, mt.NumIn())
+				for i := range method.Args {
+					arg := method.Args[i]
+					inputs[i] = reflect.ValueOf(p.Args[arg.Name])
+				}
+				if mt.NumIn() > len(method.Args) {
+					inputs[len(method.Args)] = reflect.ValueOf(p.Context)
+				}
 
 				out := m.Call(inputs)
 				res := out[0]
