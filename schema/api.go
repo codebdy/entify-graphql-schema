@@ -42,22 +42,23 @@ func (mp *MetaProcessor) appendApiToFields(method *meta.MethodMeta, fields graph
 			m := rv.MethodByName(op)
 			if m.IsValid() {
 				mt := m.Type()
-				if mt.NumIn() != 0 {
-					return nil, fmt.Errorf("method %q of %v must not accept any arguments, got %d", op, rv.Type(), mt.NumIn())
-				}
+				// if mt.NumIn() > 2 {
+				// 	return nil, fmt.Errorf("method %q of %v must accept less 2 arguments, got %d", op, rv.Type(), mt.NumIn())
+				// }
 				if mt.NumOut() != 1 {
 					return nil, fmt.Errorf("method %q of %v must have 1 return value, got %d", op, rv.Type(), mt.NumOut())
 				}
-				ot := mt.Out(0)
-				if ot.Kind() != reflect.Pointer && ot.Kind() != reflect.Interface {
-					return nil, fmt.Errorf("method %q of %v must return an interface or a pointer, got %+v", op, rv.Type(), ot)
-				}
+				//ot := mt.Out(0)
+				// if ot.Kind() != reflect.Pointer && ot.Kind() != reflect.Interface {
+				// 	return nil, fmt.Errorf("method %q of %v must return an interface or a pointer, got %+v", op, rv.Type(), ot)
+				// }
 				inputs := []reflect.Value{reflect.ValueOf(p)}
+
 				out := m.Call(inputs)
 				res := out[0]
-				if res.IsNil() {
-					return nil, fmt.Errorf("method %q of %v must return a non-nil result, got %v", op, rv.Type(), res)
-				}
+				// if res.IsNil() {
+				// 	return nil, fmt.Errorf("method %q of %v must return a non-nil result, got %v", op, rv.Type(), res)
+				// }
 				// switch res.Kind() {
 				// case reflect.Pointer:
 				// 	resolvers[op] = res.Elem().Addr().Interface()
