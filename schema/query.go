@@ -1,7 +1,9 @@
 package schema
 
 import (
+	"github.com/codebdy/entify-graphql-schema/consts"
 	"github.com/codebdy/entify-graphql-schema/resolve"
+	"github.com/codebdy/entify-graphql-schema/scalars"
 	"github.com/codebdy/entify/model/graph"
 	"github.com/codebdy/entify/model/meta"
 	"github.com/codebdy/entify/shared"
@@ -9,7 +11,27 @@ import (
 )
 
 func (m *MetaProcessor) QueryFields() graphql.Fields {
-	queryFields := graphql.Fields{}
+	queryFields := graphql.Fields{
+		consts.SERVICE: m.serviceField(),
+		consts.ENTITIES: &graphql.Field{
+			Type: &graphql.NonNull{
+				OfType: &graphql.List{
+					OfType: EntityType,
+				},
+			},
+			Args: graphql.FieldConfigArgument{
+				consts.REPRESENTATIONS: &graphql.ArgumentConfig{
+					Type: &graphql.NonNull{
+						OfType: &graphql.List{
+							OfType: &graphql.NonNull{
+								OfType: scalars.AnyType,
+							},
+						},
+					},
+				},
+			},
+		},
+	}
 
 	for _, entity := range m.Repo.Model.Graph.RootEnities() {
 		m.appendEntityToQueryFields(entity, queryFields)
@@ -26,9 +48,10 @@ func (m *MetaProcessor) QueryFields() graphql.Fields {
 func (m *MetaProcessor) EntityQueryResponseType(entity *graph.Entity) graphql.Output {
 	return m.modelParser.EntityListType(entity)
 }
-func (m *MetaProcessor) ClassQueryResponseType(cls *graph.Class) graphql.Output {
-	return m.modelParser.ClassListType(cls)
-}
+
+// func (m *MetaProcessor) ClassQueryResponseType(cls *graph.Class) graphql.Output {
+// 	return m.modelParser.ClassListType(cls)
+// }
 
 func (m *MetaProcessor) appendEntityToQueryFields(entity *graph.Entity, fields graphql.Fields) {
 	(fields)[entity.QueryName()] = &graphql.Field{

@@ -15,10 +15,6 @@ func (p *ModelParser) makeQueryArgs() {
 	for i := range p.model.Graph.Entities {
 		p.makeOneEntityArgs(p.model.Graph.Entities[i])
 	}
-	for i := range p.model.Graph.ThirdParties {
-		p.makeOneThirdPartyArgs(p.model.Graph.ThirdParties[i])
-	}
-
 	p.makeRelaionWhereExp()
 }
 
@@ -55,13 +51,8 @@ func (p *ModelParser) makeRelaionWhereExp() {
 	for className := range p.whereExpMap {
 		exp := p.whereExpMap[className]
 		entity := p.model.Graph.GetEntityByName(className)
-		third := p.model.Graph.GetThirdPartyByName(className)
 		if entity == nil {
-			if third == nil {
-				panic("Fatal error, can not find class by name:" + className)
-			} else {
-				continue
-			}
+			panic("Fatal error, can not find class by name:" + className)
 		}
 		var associations []*graph.Association
 		associations = entity.Associations()

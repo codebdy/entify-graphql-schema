@@ -8,33 +8,33 @@ import (
 	"github.com/graphql-go/graphql"
 )
 
-func (p *ModelParser) ClassListType(cls *graph.Class) *graphql.Object {
-	name := cls.Name()
-	listName := cls.ListName()
+// func (p *ModelParser) ClassListType(cls *graph.Class) *graphql.Object {
+// 	name := cls.Name()
+// 	listName := cls.ListName()
 
-	if p.listMap[listName] != nil {
-		return p.listMap[listName]
-	}
+// 	if p.listMap[listName] != nil {
+// 		return p.listMap[listName]
+// 	}
 
-	returnValue := graphql.NewObject(
-		graphql.ObjectConfig{
-			Name: listName,
-			Fields: graphql.Fields{
-				consts.NODES: &graphql.Field{
-					Type: &graphql.List{
-						OfType: p.OutputType(name),
-					},
-				},
-				consts.TOTAL: &graphql.Field{
-					Type: graphql.Int,
-				},
-			},
-		},
-	)
+// 	returnValue := graphql.NewObject(
+// 		graphql.ObjectConfig{
+// 			Name: listName,
+// 			Fields: graphql.Fields{
+// 				consts.NODES: &graphql.Field{
+// 					Type: &graphql.List{
+// 						OfType: p.OutputType(name),
+// 					},
+// 				},
+// 				consts.TOTAL: &graphql.Field{
+// 					Type: graphql.Int,
+// 				},
+// 			},
+// 		},
+// 	)
 
-	p.listMap[listName] = returnValue
-	return returnValue
-}
+// 	p.listMap[listName] = returnValue
+// 	return returnValue
+// }
 
 func (p *ModelParser) EntityListType(entity *graph.Entity) *graphql.Object {
 	name := entity.Name()
@@ -79,23 +79,23 @@ func (p *ModelParser) makeEntityObject(entity *graph.Entity) {
 	p.objectMapById[entity.InnerId()] = objType
 }
 
-func (p *ModelParser) makeThirdPartyOutputObjects(thirds []*graph.ThirdParty) {
-	for i := range thirds {
-		p.makeThirdPartyObject(thirds[i])
-	}
-}
+// func (p *ModelParser) makeThirdPartyOutputObjects(thirds []*graph.ThirdParty) {
+// 	for i := range thirds {
+// 		p.makeThirdPartyObject(thirds[i])
+// 	}
+// }
 
-func (p *ModelParser) makeThirdPartyObject(third *graph.ThirdParty) {
-	objType := graphql.NewObject(
-		graphql.ObjectConfig{
-			Name:        third.Name(),
-			Fields:      p.OutputFields(third.Attributes()),
-			Description: third.Description(),
-		},
-	)
-	p.objectTypeMap[third.Name()] = objType
-	p.objectMapById[third.InnerId()] = objType
-}
+// func (p *ModelParser) makeThirdPartyObject(third *graph.ThirdParty) {
+// 	objType := graphql.NewObject(
+// 		graphql.ObjectConfig{
+// 			Name:        third.Name(),
+// 			Fields:      p.OutputFields(third.Attributes()),
+// 			Description: third.Description(),
+// 		},
+// 	)
+// 	p.objectTypeMap[third.Name()] = objType
+// 	p.objectMapById[third.InnerId()] = objType
+// }
 
 func (p *ModelParser) ObjectType(entity *graph.Entity) *graphql.Object {
 	name := entity.Name()

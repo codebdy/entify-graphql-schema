@@ -76,7 +76,7 @@ func (p *ModelParser) QuerySDL() (string, string) {
 		types = types + objectToSDL(p.EntityeOutputType(entity.Name()), true)
 	}
 	for _, entity := range p.model.Graph.RootEnities() {
-		queryFields = queryFields + makeEntitySDL(entity)
+		queryFields = queryFields + p.makeEntitySDL(entity)
 	}
 
 	for _, aggregate := range p.aggregateMap {
@@ -98,25 +98,24 @@ func (p *ModelParser) QuerySDL() (string, string) {
 	return queryFields, types
 }
 
-
-func makeEntitySDL(entity *graph.Entity) string {
+func (p *ModelParser) makeEntitySDL(entity *graph.Entity) string {
 	sdl := ""
 	sdl = sdl + fmt.Sprintf(queryFieldSDL,
 		entity.QueryName(),
-		makeArgsSDL(queryArgs(entity.Name())),
-		queryResponseType(&entity.Class).String(),
+		makeArgsSDL(p.QueryArgs(entity.Name())),
+		p.EntityListType(entity).String(),
 	)
 
 	sdl = sdl + fmt.Sprintf(queryFieldSDL,
 		entity.QueryOneName(),
-		makeArgsSDL(queryArgs(entity.Name())),
-		Cache.OutputType(entity.Name()).String(),
+		makeArgsSDL(p.QueryArgs(entity.Name())),
+		p.OutputType(entity.Name()).String(),
 	)
 
 	sdl = sdl + fmt.Sprintf(queryFieldSDL,
 		entity.QueryAggregateName(),
-		makeArgsSDL(queryArgs(entity.Name())),
-		(*AggregateEntityType(entity)).String(),
+		makeArgsSDL(p.QueryArgs(entity.Name())),
+		(*p.aggregateType(entity)).String(),
 	)
 
 	return sdl
@@ -136,20 +135,6 @@ func makeArgArraySDL(args []*graphql.Argument) string {
 		sdls = append(sdls, arg.Name()+":"+arg.Type.Name())
 	}
 	return strings.Join(sdls, ",")
-}
-
-func makeAuthSDL() string {
-	return fmt.Sprintf("\tme : %s \n", baseUserType.Name())
-}
-
-func serviceField() *graphql.Field {
-	return &graphql.Field{
-		Type: _ServiceType,
-		Resolve: func(p graphql.ResolveParams) (interface{}, error) {
-			defer utils.PrintErrorStack()
-			return map[string]interface{}{}, nil
-		},
-	}
 }
 
 func objectToSDL(obj *graphql.Object, withKey bool) string {
@@ -178,11 +163,6 @@ func enumToSDL(enum *graphql.Enum) string {
 		values = append(values, value.Name)
 	}
 	return fmt.Sprintf(sdl, enum.Name(), strings.Join(values, "\n\t"))
-}
-
-func interfaceToSDL(intf *graphql.Interface) string {
-	sdl := interfaceSDL
-	return fmt.Sprintf(sdl, intf.Name(), fieldsToSDL(intf.Fields()))
 }
 
 func inputToSDL(input *graphql.InputObject) string {

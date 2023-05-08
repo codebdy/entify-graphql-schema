@@ -22,9 +22,9 @@ type Mutation {
 %s
 `
 
-func makeFederationSDL() string {
+func (p *ModelParser) MakeFederationSDL() string {
 	sdl := allSDL
-	queryFields, queryTypes := querySDL()
-	mutationFields, mutationTypes := mutationSDL()
+	queryFields, queryTypes := p.QuerySDL()
+	mutationFields, mutationTypes := p.MutationSDL()
 	return fmt.Sprintf(sdl, queryFields, mutationFields, queryTypes+mutationTypes)
 }
