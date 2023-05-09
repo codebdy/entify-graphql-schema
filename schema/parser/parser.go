@@ -172,12 +172,12 @@ func (p *ModelParser) InterfaceType(intf *graph.Interface) *graphql.Interface {
 			Name:        name,
 			Fields:      p.OutputFields(intf.AllAttributes()),
 			Description: intf.Description(),
-			ResolveType: p.resolveTypeFn,
+			ResolveType: p.ResolveTypeFn,
 		},
 	)
 }
 
-func (p *ModelParser) resolveTypeFn(parm graphql.ResolveTypeParams) *graphql.Object {
+func (p *ModelParser) ResolveTypeFn(parm graphql.ResolveTypeParams) *graphql.Object {
 	if value, ok := parm.Value.(map[string]interface{}); ok {
 		if id, ok := value[consts.ID].(uint64); ok {
 			entityInnerId := shared.DecodeEntityInnerId(id)

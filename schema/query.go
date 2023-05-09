@@ -11,6 +11,13 @@ import (
 )
 
 func (m *MetaProcessor) QueryFields() graphql.Fields {
+	EntityType = graphql.NewUnion(
+		graphql.UnionConfig{
+			Name:        consts.ENTITY_TYPE,
+			Types:       m.modelParser.EntityObjects(),
+			ResolveType: m.modelParser.ResolveTypeFn,
+		},
+	)
 	queryFields := graphql.Fields{
 		consts.SERVICE: m.serviceField(),
 		consts.ENTITIES: &graphql.Field{

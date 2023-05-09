@@ -81,11 +81,12 @@ func (p *ModelParser) QuerySDL() (string, string) {
 
 	for _, aggregate := range p.aggregateMap {
 		types = types + objectToSDL(aggregate, false)
-		fieldsType := aggregate.Fields()[consts.AGGREGATE].Type.(*graphql.Object)
-		types = types + objectToSDL(fieldsType, false)
 
-		for key := range fieldsType.Fields() {
-			field := fieldsType.Fields()[key]
+		// fieldsType := aggregate.Fields()[consts.AGGREGATE].Type.(*graphql.Object)
+		// types = types + objectToSDL(fieldsType, false)
+
+		for key := range aggregate.Fields() {
+			field := aggregate.Fields()[key]
 			if field.Name != consts.ARG_COUNT {
 				types = types + objectToSDL(field.Type.(*graphql.Object), false)
 			}
