@@ -6,10 +6,14 @@ import (
 
 	"github.com/codebdy/entify-graphql-schema/consts"
 	"github.com/codebdy/entify/model/graph"
+	"github.com/codebdy/entify/model/meta"
+	"github.com/codebdy/entify/shared"
 	"github.com/graphql-go/graphql"
 )
 
 var queryFieldSDL = "\t%s(%s) : %s \n"
+
+var apiFieldSDL = "\t%s%s : %s \n"
 
 var objectWithKeySDL = `
 type %s%s @key(fields: "id"){
@@ -79,6 +83,12 @@ func (p *ModelParser) QuerySDL() (string, string) {
 		queryFields = queryFields + p.makeEntitySDL(entity)
 	}
 
+	for _, api := range p.model.Meta.APIs {
+		if api.OperateType == shared.QUERY {
+			queryFields = queryFields + p.makeApiSDL(api)
+		}
+	}
+
 	for _, aggregate := range p.aggregateMap {
 		types = types + objectToSDL(aggregate, false)
 
@@ -124,6 +134,20 @@ func (p *ModelParser) makeEntitySDL(entity *graph.Entity) string {
 	// 	(*p.aggregateType(entity)).String(),
 	// )
 
+	return sdl
+}
+
+func (p *ModelParser) makeApiSDL(m *meta.MethodMeta) string {
+	sdl := ""
+	argsSdl := ""
+	if len(m.Args) > 0 {
+		argsSdl = fmt.Sprintf("(%s)", makeArgsSDL(p.MethodArgs(m.Args)))
+	}
+	sdl = sdl + fmt.Sprintf(apiFieldSDL,
+		m.Name,
+		argsSdl,
+		p.MethodType(m).String(),
+	)
 	return sdl
 }
 

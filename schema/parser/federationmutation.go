@@ -4,19 +4,25 @@ import (
 	"fmt"
 
 	"github.com/codebdy/entify/model/graph"
+	"github.com/codebdy/entify/shared"
 	"github.com/graphql-go/graphql"
 )
 
 var mutationFieldSDL = "\t%s(%s) : %s \n"
 
 func (p *ModelParser) MutationSDL() (string, string) {
-	queryFields := ""
+	mutationFields := ""
 	types := ""
 
 	for _, entity := range p.model.Graph.RootEnities() {
-		queryFields = queryFields + p.makeEntityMutationSDL(entity)
+		mutationFields = mutationFields + p.makeEntityMutationSDL(entity)
 		types = types + objectToSDL(p.MutationResponse(entity.Name()), false)
+	}
 
+	for _, api := range p.model.Meta.APIs {
+		if api.OperateType == shared.MUTATION {
+			mutationFields = mutationFields + p.makeApiSDL(api)
+		}
 	}
 
 	for _, input := range p.setInputMap {
@@ -35,7 +41,7 @@ func (p *ModelParser) MutationSDL() (string, string) {
 		types = types + inputToSDL(input)
 	}
 
-	return queryFields, types
+	return mutationFields, types
 }
 
 func (p *ModelParser) makeEntityMutationSDL(entity *graph.Entity) string {

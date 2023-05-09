@@ -12,9 +12,9 @@ import (
 
 func (mp *MetaProcessor) QueryApiFields(resolver interface{}) graphql.Fields {
 	queryFields := graphql.Fields{}
-	for _, scripts := range mp.Repo.Model.Meta.APIs {
-		if scripts.OperateType == shared.QUERY {
-			mp.appendApiToFields(scripts, queryFields, resolver)
+	for _, api := range mp.Repo.Model.Meta.APIs {
+		if api.OperateType == shared.QUERY {
+			mp.appendApiToFields(api, queryFields, resolver)
 		}
 	}
 	return queryFields
@@ -22,9 +22,9 @@ func (mp *MetaProcessor) QueryApiFields(resolver interface{}) graphql.Fields {
 
 func (mp *MetaProcessor) MutationApiFields(resolver interface{}) graphql.Fields {
 	mutationFields := graphql.Fields{}
-	for _, scripts := range mp.Repo.Model.Meta.APIs {
-		if scripts.OperateType == shared.MUTATION {
-			mp.appendApiToFields(scripts, mutationFields, resolver)
+	for _, api := range mp.Repo.Model.Meta.APIs {
+		if api.OperateType == shared.MUTATION {
+			mp.appendApiToFields(api, mutationFields, resolver)
 		}
 	}
 	return mutationFields
