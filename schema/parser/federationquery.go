@@ -117,11 +117,12 @@ func (p *ModelParser) makeEntitySDL(entity *graph.Entity) string {
 		p.OutputType(entity.Name()).String(),
 	)
 
-	sdl = sdl + fmt.Sprintf(queryFieldSDL,
-		entity.QueryAggregateName(),
-		makeArgsSDL(p.QueryArgs(entity.Name())),
-		(*p.aggregateType(entity)).String(),
-	)
+	//暂时不启用
+	// sdl = sdl + fmt.Sprintf(queryFieldSDL,
+	// 	entity.QueryAggregateName(),
+	// 	makeArgsSDL(p.QueryArgs(entity.Name())),
+	// 	(*p.aggregateType(entity)).String(),
+	// )
 
 	return sdl
 }
