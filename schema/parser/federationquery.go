@@ -93,6 +93,10 @@ func (p *ModelParser) QuerySDL() (string, string) {
 		}
 	}
 
+	for _, list := range p.listMap {
+		types = types + objectToSDL(list, false)
+	}
+
 	for _, selectColumn := range p.selectColumnsMap {
 		types = types + inputToSDL(selectColumn)
 	}
