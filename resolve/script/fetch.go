@@ -2,6 +2,7 @@ package script
 
 import (
 	"bytes"
+	"encoding/json"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -15,11 +16,14 @@ func FetchFn(url string, options map[string]interface{}) string {
 
 	reqBody := []byte("")
 	if options != nil && options["body"] != nil {
-		reqBody = []byte(options["body"].(string))
+		jsonStr, err := json.Marshal(options["body"])
+		if err != nil {
+			panic(err.Error())
+		}
+		reqBody = jsonStr
 	}
 	client := &http.Client{}
 	req, err := http.NewRequest(method, url, bytes.NewBuffer(reqBody))
-
 	if err != nil {
 		log.Println(err)
 		return ""
@@ -36,14 +40,14 @@ func FetchFn(url string, options map[string]interface{}) string {
 	res, err := client.Do(req)
 	if err != nil {
 		log.Println(err)
-		return ""
+		panic(err.Error())
 	}
 	defer res.Body.Close()
 
 	body, err := ioutil.ReadAll(res.Body)
 	if err != nil {
 		log.Println(err)
-		return ""
+		panic(err.Error())
 	}
 	return string(body)
 }

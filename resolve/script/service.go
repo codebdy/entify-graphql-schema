@@ -10,27 +10,27 @@ import (
 	"github.com/codebdy/entify/orm"
 )
 
-type ScriptService struct {
+type EntifyService struct {
 	ctx context.Context
 	//roleIds []uint64
 	repository *entify.Repository
 	session    *orm.Session
 }
 
-func NewService(ctx context.Context, repository *entify.Repository) *ScriptService {
+func NewService(ctx context.Context, repository *entify.Repository) *EntifyService {
 
-	return &ScriptService{
+	return &EntifyService{
 		ctx:        ctx,
 		repository: repository,
 		//roleIds: service.QueryRoleIds(ctx, model),
 	}
 }
 
-func (s *ScriptService) SetSession(session *orm.Session) {
+func (s *EntifyService) SetSession(session *orm.Session) {
 	s.session = session
 }
 
-func (s *ScriptService) BeginTx() {
+func (s *EntifyService) BeginTx() {
 	session, err := orm.Open(s.repository.DbConfig, s.repository.Model)
 	if err != nil {
 		log.Panic(err.Error())
@@ -42,7 +42,7 @@ func (s *ScriptService) BeginTx() {
 	}
 }
 
-func (s *ScriptService) Commit() {
+func (s *EntifyService) Commit() {
 	if s.session == nil {
 		log.Panic("No session to commit")
 	}
@@ -53,7 +53,7 @@ func (s *ScriptService) Commit() {
 	}
 }
 
-func (s *ScriptService) ClearTx() {
+func (s *EntifyService) ClearTx() {
 	if s.session == nil {
 		log.Panic("No session to ClearTx")
 	}
@@ -61,7 +61,7 @@ func (s *ScriptService) ClearTx() {
 	s.session = nil
 }
 
-func (s *ScriptService) Rollback() {
+func (s *EntifyService) Rollback() {
 	if s.session == nil {
 		log.Panic("No session to Rollback")
 	}
@@ -73,7 +73,7 @@ func (s *ScriptService) Rollback() {
 	s.session = nil
 }
 
-func (s *ScriptService) checkSession() {
+func (s *EntifyService) checkSession() {
 	if s.session == nil {
 		session, err := orm.Open(s.repository.DbConfig, s.repository.Model)
 		if err != nil {
@@ -83,7 +83,7 @@ func (s *ScriptService) checkSession() {
 	}
 }
 
-func (s *ScriptService) Save(objects []interface{}, entityName string) []orm.InsanceData {
+func (s *EntifyService) Save(objects []interface{}, entityName string) []orm.InsanceData {
 	s.checkSession()
 
 	if len(objects) > 0 {
@@ -94,7 +94,7 @@ func (s *ScriptService) Save(objects []interface{}, entityName string) []orm.Ins
 	return []orm.InsanceData{}
 }
 
-func (s *ScriptService) SaveOne(object interface{}, entityName string) interface{} {
+func (s *EntifyService) SaveOne(object interface{}, entityName string) interface{} {
 	s.checkSession()
 
 	if object == nil {
@@ -111,7 +111,7 @@ func (s *ScriptService) SaveOne(object interface{}, entityName string) interface
 	return result
 }
 
-func (s *ScriptService) WriteLog(
+func (s *EntifyService) WriteLog(
 	operate string,
 	result string,
 	message string,
@@ -119,7 +119,7 @@ func (s *ScriptService) WriteLog(
 	//logs.WriteBusinessLog(s.ctx, operate, result, message)
 }
 
-func (s *ScriptService) EmitNotification(text string, noticeType string, userId uint64) {
+func (s *EntifyService) EmitNotification(text string, noticeType string, userId uint64) {
 	s.SaveOne(
 		map[string]interface{}{
 			"text":       text,

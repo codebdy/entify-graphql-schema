@@ -78,6 +78,6 @@ func (m *MetaProcessor) appendMethodsToFields(method *meta.MethodMeta, fields gr
 		Type:        m.modelParser.MethodType(method),
 		Args:        m.modelParser.MethodArgs(method.Args),
 		Description: method.Description,
-		Resolve:     resolve.ScriptMethodResolveFn(method.LogicScript, method.Args, m.Repo),
+		Resolve:     resolve.ScriptMethodResolveFn(method, m.Repo),
 	}
 }

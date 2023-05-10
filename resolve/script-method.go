@@ -2,6 +2,7 @@ package resolve
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/codebdy/entify"
 	"github.com/codebdy/entify-graphql-schema/resolve/script"
@@ -11,39 +12,55 @@ import (
 	"github.com/graphql-go/graphql"
 )
 
-func ScriptMethodResolveFn(code string, methodArgs []meta.ArgMeta, repository *entify.Repository) graphql.FieldResolveFn {
+func ScriptMethodResolveFn(method *meta.MethodMeta, repository *entify.Repository) graphql.FieldResolveFn {
 	return func(p graphql.ResolveParams) (interface{}, error) {
 		defer shared.PrintErrorStack()
-		scriptService := script.NewService(p.Context, repository)
+		entifyService := script.NewService(p.Context, repository)
 		vm := goja.New()
 		script.Enable(vm)
 
 		var meMap map[string]interface{}
 
+		vm.SetFieldNameMapper(goja.UncapFieldNameMapper())
 		vm.Set("$args", p.Args)
-		vm.Set("$beginTx", scriptService.BeginTx)
-		vm.Set("$clearTx", scriptService.ClearTx)
-		vm.Set("$commit", scriptService.Commit)
-		vm.Set("$rollback", scriptService.Rollback)
-		vm.Set("$save", scriptService.Save)
-		vm.Set("$saveOne", scriptService.SaveOne)
-		vm.Set("$log", scriptService.WriteLog)
-		vm.Set("$notice", scriptService.EmitNotification)
+		vm.Set("$entify", entifyService)
 		//vm.Set("$query", scriptService.Query)
 		vm.Set("$me", meMap)
 
-		script.Enable(vm)
+		argsStr := ""
+		if len(p.Args) > 0 {
+			templateStr := `const {%s} = $args`
+
+			keys := make([]string, 0, len(method.Args))
+			for _, arg := range method.Args {
+				keys = append(keys, arg.Name)
+			}
+
+			argsStr = fmt.Sprintf(templateStr, strings.Join(keys, ","))
+
+		}
+
 		funcStr := fmt.Sprintf(
 			`
+			function %s(){
+				%s
 			%s
+			}
 			`,
-			code,
+			method.Name,
+			argsStr,
+			method.LogicScript,
 		)
-
-		result, err := vm.RunString(funcStr)
+		_, err := vm.RunString(funcStr)
 		if err != nil {
 			panic(err)
 		}
-		return result.Export(), nil
+		var fn func() string
+		err = vm.ExportTo(vm.Get(method.Name), &fn)
+		if err != nil {
+			panic(err)
+		}
+
+		return fn(), nil
 	}
 }
