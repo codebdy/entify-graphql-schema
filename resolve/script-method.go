@@ -21,6 +21,11 @@ func ScriptMethodResolveFn(method *meta.MethodMeta, repository *entify.Repositor
 
 		var meMap map[string]interface{}
 
+		var codes string
+		for i := range repository.Model.Meta.Codes {
+			codes = codes + repository.Model.Meta.Codes[i].ScriptText + "\n"
+		}
+
 		vm.SetFieldNameMapper(goja.UncapFieldNameMapper())
 		vm.Set("$args", p.Args)
 		vm.Set("$entify", entifyService)
@@ -42,11 +47,13 @@ func ScriptMethodResolveFn(method *meta.MethodMeta, repository *entify.Repositor
 
 		funcStr := fmt.Sprintf(
 			`
+			%s
 			function %s(){
 				%s
 			%s
 			}
 			`,
+			codes,
 			method.Name,
 			argsStr,
 			method.LogicScript,

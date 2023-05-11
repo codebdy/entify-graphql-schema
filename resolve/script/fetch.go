@@ -69,6 +69,7 @@ func FetchFn(url string, options map[string]interface{}) interface{} {
 		panic(err.Error())
 	}
 
+	//@@后面返回类型要根据method定义来确定
 	var result map[string]interface{}
 	err = json.Unmarshal(body, &result)
 	if err != nil {

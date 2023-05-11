@@ -1,8 +1,8 @@
 github.com/chzyer/logex v1.2.0/go.mod h1:9+9sk7u7pGNWYMkh0hdiL++6OeibzJccyQU4p4MedaY=
 github.com/chzyer/readline v1.5.0/go.mod h1:x22KAscuvRqlLoK9CsoYsmxoXZMMFVyOl86cAH8qUic=
 github.com/chzyer/test v0.0.0-20210722231415-061457976a23/go.mod h1:Q3SI9o4m/ZMnBNeIyt5eFwwo7qiLfzFZmjNmxjkiQlU=
-github.com/codebdy/entify v0.0.5 h1:SE53F88vjZNOC6zICRUDginGRFFgnUQqw0whFtA67rI=
-github.com/codebdy/entify v0.0.5/go.mod h1:YaiTlrOyFbuEiMKu7fH/lMh0l+zM6cVb6rUDmbZwNek=
+github.com/codebdy/entify v0.0.10 h1:8II1a6rVL+J+Y/INwVI1LJ0FHOiOM9ObjCji5qE9IjI=
+github.com/codebdy/entify v0.0.10/go.mod h1:YaiTlrOyFbuEiMKu7fH/lMh0l+zM6cVb6rUDmbZwNek=
 github.com/creack/pty v1.1.9/go.mod h1:oKZEueFk5CKHvIhNR5MUki03XCEU+Q6VDXinZuGJ33E=
 github.com/davecgh/go-spew v1.1.0 h1:ZDRjVQ15GmhC3fiQ8ni8+OwkZQO4DARzQgrnXU1Liz8=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
