@@ -55,7 +55,7 @@ func ScriptMethodResolveFn(method *meta.MethodMeta, repository *entify.Repositor
 		if err != nil {
 			panic(err)
 		}
-		var fn func() string
+		var fn func() interface{}
 		err = vm.ExportTo(vm.Get(method.Name), &fn)
 		if err != nil {
 			panic(err)
