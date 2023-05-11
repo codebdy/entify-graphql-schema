@@ -83,6 +83,12 @@ func (p *ModelParser) QuerySDL() (string, string) {
 		queryFields = queryFields + p.makeEntitySDL(entity)
 	}
 
+	for _, logic := range p.model.Meta.ScriptLogics {
+		if logic.OperateType == shared.QUERY {
+			queryFields = queryFields + p.makeApiSDL(logic)
+		}
+	}
+
 	for _, api := range p.model.Meta.APIs {
 		if api.OperateType == shared.QUERY {
 			queryFields = queryFields + p.makeApiSDL(api)

@@ -19,6 +19,12 @@ func (p *ModelParser) MutationSDL() (string, string) {
 		types = types + objectToSDL(p.MutationResponse(entity.Name()), false)
 	}
 
+	for _, logic := range p.model.Meta.ScriptLogics {
+		if logic.OperateType == shared.MUTATION {
+			mutationFields = mutationFields + p.makeApiSDL(logic)
+		}
+	}
+
 	for _, api := range p.model.Meta.APIs {
 		if api.OperateType == shared.MUTATION {
 			mutationFields = mutationFields + p.makeApiSDL(api)
