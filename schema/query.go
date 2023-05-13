@@ -1,9 +1,7 @@
 package schema
 
 import (
-	"github.com/codebdy/entify-graphql-schema/consts"
 	"github.com/codebdy/entify-graphql-schema/resolve"
-	"github.com/codebdy/entify-graphql-schema/scalars"
 	"github.com/codebdy/entify/model/graph"
 	"github.com/codebdy/entify/model/meta"
 	"github.com/codebdy/entify/shared"
@@ -11,33 +9,33 @@ import (
 )
 
 func (m *MetaProcessor) QueryFields() graphql.Fields {
-	EntityType = graphql.NewUnion(
-		graphql.UnionConfig{
-			Name:        consts.ENTITY_TYPE,
-			Types:       m.modelParser.EntityObjects(),
-			ResolveType: m.modelParser.ResolveTypeFn,
-		},
-	)
+	// EntityType = graphql.NewUnion(
+	// 	graphql.UnionConfig{
+	// 		Name:        consts.ENTITY_TYPE,
+	// 		Types:       m.modelParser.EntityObjects(),
+	// 		ResolveType: m.modelParser.ResolveTypeFn,
+	// 	},
+	// )
 	queryFields := graphql.Fields{
-		consts.SERVICE: m.serviceField(),
-		consts.ENTITIES: &graphql.Field{
-			Type: &graphql.NonNull{
-				OfType: &graphql.List{
-					OfType: EntityType,
-				},
-			},
-			Args: graphql.FieldConfigArgument{
-				consts.REPRESENTATIONS: &graphql.ArgumentConfig{
-					Type: &graphql.NonNull{
-						OfType: &graphql.List{
-							OfType: &graphql.NonNull{
-								OfType: scalars.AnyType,
-							},
-						},
-					},
-				},
-			},
-		},
+		// consts.SERVICE: m.serviceField(),
+		// consts.ENTITIES: &graphql.Field{
+		// 	Type: &graphql.NonNull{
+		// 		OfType: &graphql.List{
+		// 			OfType: EntityType,
+		// 		},
+		// 	},
+		// 	Args: graphql.FieldConfigArgument{
+		// 		consts.REPRESENTATIONS: &graphql.ArgumentConfig{
+		// 			Type: &graphql.NonNull{
+		// 				OfType: &graphql.List{
+		// 					OfType: &graphql.NonNull{
+		// 						OfType: scalars.AnyType,
+		// 					},
+		// 				},
+		// 			},
+		// 		},
+		// 	},
+		// },
 	}
 
 	for _, entity := range m.Repo.Model.Graph.RootEnities() {

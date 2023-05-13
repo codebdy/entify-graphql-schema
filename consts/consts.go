@@ -1,6 +1,12 @@
 package consts
 
 const (
+	ROOT_QUERY_NAME        = "Query"
+	ROOT_MUTATION_NAME     = "Mutation"
+	ROOT_SUBSCRIPTION_NAME = "Subscription"
+)
+
+const (
 	ONE        = "one"
 	QUERY      = "query"
 	MUTATION   = "mutation"
