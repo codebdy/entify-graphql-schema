@@ -5,9 +5,9 @@ import (
 )
 
 var allSDL = `
-extend schema
-	@link(url: "https://specs.apollo.dev/federation/v2.0",
-		import: ["@key"])
+#graphql-go-tools不支持V2
+#extend schema
+#	@link(url: "https://specs.apollo.dev/federation/v2.0", import: ["@key"])
 
 scalar JSON
 scalar DateTime
