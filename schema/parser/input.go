@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	"github.com/codebdy/entify/model/graph"
-	"github.com/codebdy/entify/model/observer/consts"
+	"github.com/codebdy/entify/shared"
 	"github.com/graphql-go/graphql"
 )
 
@@ -39,19 +39,19 @@ func (p *ModelParser) makeHasManyInput(entity *graph.Entity, hasManyname string)
 	return graphql.NewInputObject(graphql.InputObjectConfig{
 		Name: hasManyname,
 		Fields: graphql.InputObjectConfigFieldMap{
-			consts.ARG_ADD: &graphql.InputObjectFieldConfig{
+			shared.ARG_ADD: &graphql.InputObjectFieldConfig{
 				Type: listType,
 			},
-			consts.ARG_DELETE: &graphql.InputObjectFieldConfig{
+			shared.ARG_DELETE: &graphql.InputObjectFieldConfig{
 				Type: listType,
 			},
-			consts.ARG_UPDATE: &graphql.InputObjectFieldConfig{
+			shared.ARG_UPDATE: &graphql.InputObjectFieldConfig{
 				Type: listType,
 			},
-			consts.ARG_SYNC: &graphql.InputObjectFieldConfig{
+			shared.ARG_SYNC: &graphql.InputObjectFieldConfig{
 				Type: listType,
 			},
-			consts.ARG_CASCADE: &graphql.InputObjectFieldConfig{
+			shared.ARG_CASCADE: &graphql.InputObjectFieldConfig{
 				Type: graphql.Boolean,
 			},
 		},
@@ -67,13 +67,13 @@ func (p *ModelParser) makeHasOneInput(entity *graph.Entity, hasOneName string) *
 	return graphql.NewInputObject(graphql.InputObjectConfig{
 		Name: hasOneName,
 		Fields: graphql.InputObjectConfigFieldMap{
-			consts.ARG_CLEAR: &graphql.InputObjectFieldConfig{
+			shared.ARG_CLEAR: &graphql.InputObjectFieldConfig{
 				Type: graphql.Boolean,
 			},
-			consts.ARG_SYNC: &graphql.InputObjectFieldConfig{
+			shared.ARG_SYNC: &graphql.InputObjectFieldConfig{
 				Type: typeInput,
 			},
-			consts.ARG_CASCADE: &graphql.InputObjectFieldConfig{
+			shared.ARG_CASCADE: &graphql.InputObjectFieldConfig{
 				Type: graphql.Boolean,
 			},
 		},
@@ -133,7 +133,7 @@ func (p *ModelParser) getAssociationType(association *graph.Association) *graphq
 func (p *ModelParser) inputFields(entity *graph.Entity, withId bool) graphql.InputObjectConfigFieldMap {
 	fields := graphql.InputObjectConfigFieldMap{}
 	for _, column := range entity.AllAttributes() {
-		if (column.Name != consts.ID || withId) && !column.DeleteDate && !column.CreateDate && !column.UpdateDate {
+		if (column.Name != shared.ID_NAME || withId) && !column.DeleteDate && !column.CreateDate && !column.UpdateDate {
 			fields[column.Name] = &graphql.InputObjectFieldConfig{
 				Type:        p.InputPropertyType(column),
 				Description: column.Description,
@@ -144,7 +144,7 @@ func (p *ModelParser) inputFields(entity *graph.Entity, withId bool) graphql.Inp
 }
 
 func (p *ModelParser) makeEntitySaveInput(entity *graph.Entity) *graphql.InputObject {
-	name := entity.Name() + consts.INPUT
+	name := entity.Name() + shared.INPUT
 	return graphql.NewInputObject(
 		graphql.InputObjectConfig{
 			Name:   name,
@@ -156,7 +156,7 @@ func (p *ModelParser) makeEntitySaveInput(entity *graph.Entity) *graphql.InputOb
 func (p *ModelParser) makeEntitySetInput(entity *graph.Entity) *graphql.InputObject {
 	return graphql.NewInputObject(
 		graphql.InputObjectConfig{
-			Name:   entity.Name() + consts.SET_INPUT,
+			Name:   entity.Name() + shared.SET_INPUT,
 			Fields: p.inputFields(entity, false),
 		},
 	)
@@ -167,12 +167,12 @@ func (p *ModelParser) makeEntityMutationResponseType(entity *graph.Entity) *grap
 
 	returnValue = graphql.NewObject(
 		graphql.ObjectConfig{
-			Name: entity.Name() + consts.MUTATION_RESPONSE,
+			Name: entity.Name() + shared.MUTATION_RESPONSE,
 			Fields: graphql.Fields{
-				consts.RESPONSE_AFFECTEDROWS: &graphql.Field{
+				shared.RESPONSE_AFFECTEDROWS: &graphql.Field{
 					Type: graphql.Int,
 				},
-				consts.RESPONSE_RETURNING: &graphql.Field{
+				shared.RESPONSE_RETURNING: &graphql.Field{
 					Type: &graphql.NonNull{
 						OfType: &graphql.List{
 							OfType: p.OutputType(entity.Name()),

@@ -7,7 +7,6 @@ import (
 	"github.com/codebdy/entify-graphql-schema/service"
 	"github.com/codebdy/entify/model/data"
 	"github.com/codebdy/entify/model/observer"
-	"github.com/codebdy/entify/model/observer/consts"
 	"github.com/codebdy/entify/shared"
 	"github.com/graphql-go/graphql"
 )
@@ -15,7 +14,7 @@ import (
 func PostResolveFn(entityName string, r *entify.Repository) graphql.FieldResolveFn {
 	return func(p graphql.ResolveParams) (interface{}, error) {
 		defer shared.PrintErrorStack()
-		objects := p.Args[consts.ARG_OBJECTS].([]map[string]interface{})
+		objects := p.Args[shared.ARG_OBJECTS].([]map[string]interface{})
 
 		s := service.New(p.Context, r)
 		returing, err := s.Save(entityName, objects)
@@ -32,10 +31,10 @@ func PostResolveFn(entityName string, r *entify.Repository) graphql.FieldResolve
 func SetResolveFn(entityName string, r *entify.Repository) graphql.FieldResolveFn {
 	return func(p graphql.ResolveParams) (interface{}, error) {
 		defer shared.PrintErrorStack()
-		s := service.New(p.Context, r)
-		objs := s.QueryEntity(entityName, p.Args, []string{}).Nodes
-		convertedObjs := objs
-		instances := []*data.Instance{}
+		// s := service.New(p.Context, r)
+		// objs := s.QueryEntity(entityName, p.Args, []string{}).Nodes
+		// convertedObjs := objs
+		//instances := []*data.Instance{}
 
 		// for i := range convertedObjs {
 		// 	obj := convertedObjs[i]
@@ -47,25 +46,26 @@ func SetResolveFn(entityName string, r *entify.Repository) graphql.FieldResolveF
 		// 		object[key] = set[key]
 		// 	}
 		// }
-		returing, err := s.Save(entityName, convertedObjs)
+		//returing, err := s.Save(entityName, convertedObjs)
 
-		if err != nil {
-			return nil, err
-		}
+		// if err != nil {
+		// 	return nil, err
+		// }
 
 		//logs.WriteModelLog(model.Graph, &entity.Class, p.Context, logs.SET, logs.SUCCESS, "", p.Context.Value("gql"))
 
-		return map[string]interface{}{
-			consts.RESPONSE_RETURNING:    returing,
-			consts.RESPONSE_AFFECTEDROWS: len(instances),
-		}, nil
+		// return map[string]interface{}{
+		// 	shared.RESPONSE_RETURNING:    returing,
+		// 	shared.RESPONSE_AFFECTEDROWS: len(instances),
+		// }, nil
+		return nil, nil
 	}
 }
 
 func PostOneResolveFn(entityName string, r *entify.Repository) graphql.FieldResolveFn {
 	return func(p graphql.ResolveParams) (interface{}, error) {
 		defer shared.PrintErrorStack()
-		object := p.Args[consts.ARG_OBJECT].(map[string]interface{})
+		object := p.Args[shared.ARG_OBJECT].(map[string]interface{})
 		data.ConvertObjectId(object)
 
 		s := service.New(p.Context, r)
@@ -78,7 +78,7 @@ func PostOneResolveFn(entityName string, r *entify.Repository) graphql.FieldReso
 func DeleteByIdResolveFn(entityName string, r *entify.Repository) graphql.FieldResolveFn {
 	return func(p graphql.ResolveParams) (interface{}, error) {
 		defer shared.PrintErrorStack()
-		argId := p.Args[consts.ID]
+		argId := p.Args[shared.ID_NAME]
 
 		s := service.New(p.Context, r)
 		result, err := s.DeleteInstance(entityName, data.ConvertId(argId))
@@ -91,12 +91,12 @@ func DeleteResolveFn(entityName string, r *entify.Repository) graphql.FieldResol
 	return func(p graphql.ResolveParams) (interface{}, error) {
 		defer shared.PrintErrorStack()
 		s := service.New(p.Context, r)
-		objs := s.QueryEntity(entityName, p.Args, []string{consts.ID}).Nodes
+		objs := s.QueryEntity(entityName, p.Args, []string{shared.ID_NAME}).Nodes
 
 		if objs == nil || len(objs) == 0 {
 			return map[string]interface{}{
-				consts.RESPONSE_RETURNING:    []interface{}{},
-				consts.RESPONSE_AFFECTEDROWS: 0,
+				shared.RESPONSE_RETURNING:    []interface{}{},
+				shared.RESPONSE_AFFECTEDROWS: 0,
 			}, nil
 		}
 
@@ -104,7 +104,7 @@ func DeleteResolveFn(entityName string, r *entify.Repository) graphql.FieldResol
 
 		ids := []shared.ID{}
 		for i := range convertedObjs {
-			ids = append(ids, data.ConvertId(convertedObjs[i][consts.ID]))
+			ids = append(ids, data.ConvertId(convertedObjs[i][shared.ID_NAME]))
 		}
 
 		_, err := s.DeleteInstances(entityName, ids)
@@ -113,8 +113,8 @@ func DeleteResolveFn(entityName string, r *entify.Repository) graphql.FieldResol
 		}
 		observer.EmitObjectMultiDeleted(objs, entityName, p.Context)
 		return map[string]interface{}{
-			consts.RESPONSE_RETURNING:    objs,
-			consts.RESPONSE_AFFECTEDROWS: len(ids),
+			shared.RESPONSE_RETURNING:    objs,
+			shared.RESPONSE_AFFECTEDROWS: len(ids),
 		}, nil
 	}
 }

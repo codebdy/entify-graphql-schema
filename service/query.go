@@ -4,8 +4,8 @@ import (
 	"log"
 
 	"github.com/codebdy/entify/model/graph"
-	"github.com/codebdy/entify/model/observer/consts"
 	"github.com/codebdy/entify/orm"
+	"github.com/codebdy/entify/shared"
 )
 
 func mergeWhereArgs(whereArgs, authArgs graph.QueryArg) graph.QueryArg {
@@ -18,7 +18,7 @@ func mergeWhereArgs(whereArgs, authArgs graph.QueryArg) graph.QueryArg {
 	}
 
 	return graph.QueryArg{
-		consts.ARG_AND: []graph.QueryArg{
+		shared.ARG_AND: []graph.QueryArg{
 			whereArgs,
 			authArgs,
 		},
@@ -56,9 +56,9 @@ func (s *Service) QueryById(entityName string, id uint64) interface{} {
 		log.Panic("No access")
 	}
 	return s.QueryOneEntity(entityName, mergeWhereArgs(graph.QueryArg{
-		consts.ARG_WHERE: graph.QueryArg{
-			consts.ID: graph.QueryArg{
-				consts.ARG_EQ: id,
+		shared.ARG_WHERE: graph.QueryArg{
+			shared.ID_NAME: graph.QueryArg{
+				shared.ARG_EQ: id,
 			},
 		},
 	}, authArgs))

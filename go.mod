@@ -15,8 +15,10 @@ require (
 )
 
 require (
-	github.com/codebdy/entify v0.0.10
+	github.com/codebdy/entify v0.0.14
 	github.com/dop251/goja v0.0.0-20230402114112-623f9dda9079
 	github.com/graph-gophers/dataloader v5.0.0+incompatible
 	github.com/graphql-go/graphql v0.8.1
 )
+
+//replace github.com/codebdy/entify v0.0.13 => ../entify

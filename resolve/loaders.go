@@ -7,7 +7,6 @@ import (
 	"github.com/codebdy/entify"
 	"github.com/codebdy/entify-graphql-schema/service"
 	"github.com/codebdy/entify/model/graph"
-	"github.com/codebdy/entify/model/observer/consts"
 
 	"github.com/codebdy/entify/shared"
 	"github.com/graph-gophers/dataloader"
@@ -43,7 +42,7 @@ func CreateDataLoaders() *Loaders {
 }
 
 func (l *Loaders) GetLoader(p graphql.ResolveParams, association *graph.Association, args graph.QueryArg, r *entify.Repository) *dataloader.Loader {
-	metaId := p.Context.Value(consts.META_ID)
+	metaId := p.Context.Value(shared.METAID)
 	loaderId := fmt.Sprintf("%s@%d", association.Path(), metaId)
 	if l.loaders[loaderId] == nil {
 		l.loaders[loaderId] = dataloader.NewBatchedLoader(QueryBatchFn(p, association, args, r))
@@ -88,7 +87,7 @@ func QueryBatchFn(p graphql.ResolveParams, association *graph.Association, args 
 func findInstanceFromArray(id uint64, array []map[string]interface{}) []interface{} {
 	var instances []interface{}
 	for i, obj := range array {
-		if obj[consts.ASSOCIATION_OWNER_ID] == id {
+		if obj[shared.ASSOCIATION_OWNER_ID] == id {
 			instances = append(instances, array[i])
 		}
 	}

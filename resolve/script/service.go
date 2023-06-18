@@ -6,8 +6,8 @@ import (
 
 	"github.com/codebdy/entify"
 	"github.com/codebdy/entify/model/observer"
-	"github.com/codebdy/entify/model/observer/consts"
 	"github.com/codebdy/entify/orm"
+	"github.com/codebdy/entify/shared"
 )
 
 type EntifyService struct {
@@ -18,25 +18,24 @@ type EntifyService struct {
 }
 
 func NewService(ctx context.Context, repository *entify.Repository) *EntifyService {
-
+	session, err := repository.OpenSession()
+	if err != nil {
+		panic(err.Error())
+	}
 	return &EntifyService{
 		ctx:        ctx,
 		repository: repository,
-		//roleIds: service.QueryRoleIds(ctx, model),
+		session:    session,
 	}
-}
-
-func (s *EntifyService) SetSession(session *orm.Session) {
-	s.session = session
 }
 
 func (s *EntifyService) BeginTx() {
-	session, err := orm.Open(s.repository.DbConfig, s.repository.Model)
-	if err != nil {
-		log.Panic(err.Error())
-	}
-	s.session = session
-	err = session.BeginTx()
+	// session, err := orm.Open(s.repository.DbConfig, s.repository.Model)
+	// if err != nil {
+	// 	log.Panic(err.Error())
+	// }
+	// s.session = session
+	err := s.session.BeginTx()
 	if err != nil {
 		log.Panic(err.Error())
 	}
@@ -130,7 +129,7 @@ func (s *EntifyService) EmitNotification(text string, noticeType string, userId 
 			"noticeType": noticeType,
 			"user": map[string]interface{}{
 				"sync": map[string]interface{}{
-					consts.ID: userId,
+					shared.ID_NAME: userId,
 				},
 			},
 			"app": map[string]interface{}{
