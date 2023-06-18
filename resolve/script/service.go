@@ -83,6 +83,10 @@ func (s *EntifyService) checkSession() {
 	}
 }
 
+func (s *EntifyService) QueryOne(entityName string, args map[string]interface{}) interface{} {
+	return s.session.QueryOne(entityName, args)
+}
+
 func (s *EntifyService) Save(objects []interface{}, entityName string) []orm.InsanceData {
 	s.checkSession()
 
