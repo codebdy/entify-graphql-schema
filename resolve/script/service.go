@@ -86,7 +86,7 @@ func (s *EntifyService) QueryOne(entityName string, args map[string]interface{})
 	return s.session.QueryOne(entityName, args)
 }
 
-func (s *EntifyService) Save(objects []interface{}, entityName string) []orm.InsanceData {
+func (s *EntifyService) Save(entityName string, objects []interface{}) []orm.InsanceData {
 	s.checkSession()
 
 	if len(objects) > 0 {
@@ -97,7 +97,7 @@ func (s *EntifyService) Save(objects []interface{}, entityName string) []orm.Ins
 	return []orm.InsanceData{}
 }
 
-func (s *EntifyService) SaveOne(object interface{}, entityName string) interface{} {
+func (s *EntifyService) SaveOne(entityName string, object interface{}) interface{} {
 	s.checkSession()
 
 	if object == nil {
@@ -124,6 +124,7 @@ func (s *EntifyService) WriteLog(
 
 func (s *EntifyService) EmitNotification(text string, noticeType string, userId uint64) {
 	s.SaveOne(
+		"Notification",
 		map[string]interface{}{
 			"text":       text,
 			"noticeType": noticeType,
@@ -138,7 +139,6 @@ func (s *EntifyService) EmitNotification(text string, noticeType string, userId 
 				},
 			},
 		},
-		"Notification",
 	)
 }
 
