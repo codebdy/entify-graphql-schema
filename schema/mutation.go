@@ -15,9 +15,14 @@ func (m *MetaProcessor) mutationFields() graphql.Fields {
 			m.appendEntityMutationToFields(entity, mutationFields)
 		}
 	}
-	for _, scripts := range m.Repo.Model.Meta.ScriptLogics {
-		if scripts.OperateType == shared.MUTATION {
-			m.appendMethodsToFields(scripts, mutationFields)
+	for _, script := range m.Repo.Model.Meta.ScriptLogics {
+		if script.OperateType == shared.MUTATION {
+			m.appendScriptMethodsToFields(script, mutationFields)
+		}
+	}
+	for _, logicFLow := range m.Repo.Model.Meta.GraphLogics {
+		if logicFLow.OperateType == shared.MUTATION {
+			m.appendLogicFlowMethodsToFields(logicFLow, mutationFields, getSubFlowMetas(m.Repo.Model.Meta.GraphLogics))
 		}
 	}
 	return mutationFields

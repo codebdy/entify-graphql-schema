@@ -9,6 +9,7 @@ require (
 	github.com/go-sql-driver/mysql v1.7.0 // indirect
 	github.com/google/pprof v0.0.0-20230207041349-798e818bf904 // indirect
 	github.com/google/uuid v1.3.0 // indirect
+	github.com/mitchellh/mapstructure v1.5.0 // indirect
 	github.com/opentracing/opentracing-go v1.2.0 // indirect
 	golang.org/x/crypto v0.8.0 // indirect
 	golang.org/x/text v0.9.0 // indirect
@@ -16,9 +17,12 @@ require (
 
 require (
 	github.com/codebdy/entify v0.0.14
+	github.com/codebdy/minions-go v0.0.1
 	github.com/dop251/goja v0.0.0-20230402114112-623f9dda9079
 	github.com/graph-gophers/dataloader v5.0.0+incompatible
 	github.com/graphql-go/graphql v0.8.1
 )
 
-//replace github.com/codebdy/entify v0.0.13 => ../entify
+replace github.com/codebdy/entify v0.0.14 => ../entify
+
+replace github.com/codebdy/minions-go v0.0.1 => ../minions-go
