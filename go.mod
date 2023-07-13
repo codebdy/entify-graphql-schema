@@ -17,7 +17,7 @@ require (
 
 require (
 	github.com/codebdy/entify v0.0.14
-	github.com/codebdy/minions-go v0.0.1
+	github.com/codebdy/minions-go v0.0.2
 	github.com/dop251/goja v0.0.0-20230402114112-623f9dda9079
 	github.com/graph-gophers/dataloader v5.0.0+incompatible
 	github.com/graphql-go/graphql v0.8.1
@@ -25,4 +25,4 @@ require (
 
 replace github.com/codebdy/entify v0.0.14 => ../entify
 
-replace github.com/codebdy/minions-go v0.0.1 => ../minions-go
+replace github.com/codebdy/minions-go v0.0.2 => ../minions-go

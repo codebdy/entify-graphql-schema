@@ -100,7 +100,7 @@ func getSubFlowMetas(methodMetas []*meta.MethodMeta) *[]dsl.SubLogicFlowMeta {
 	subLogicFlows := []dsl.SubLogicFlowMeta{}
 	for _, method := range methodMetas {
 		if method.Type == shared.SUBMETHOD {
-			subLogicFlows = append(subLogicFlows, dsl.SubLogicFlowMeta{Id: method.Uuid, LogicFlowMeta: method.LogicMeta})
+			subLogicFlows = append(subLogicFlows, dsl.SubLogicFlowMeta{Id: method.Uuid, LogicFlowMeta: method.LogicMetas})
 		}
 	}
 

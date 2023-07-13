@@ -6,8 +6,8 @@ import (
 	"github.com/codebdy/entify"
 	"github.com/codebdy/entify/model/meta"
 	"github.com/codebdy/entify/shared"
+	"github.com/codebdy/minions-go"
 	"github.com/codebdy/minions-go/dsl"
-	"github.com/codebdy/minions-go/runtime"
 	"github.com/graphql-go/graphql"
 )
 
@@ -15,15 +15,23 @@ func LogicFlowMethodResolveFn(method *meta.MethodMeta, repository *entify.Reposi
 	return func(p graphql.ResolveParams) (interface{}, error) {
 		defer shared.PrintErrorStack()
 		var returnValue any
-		ctx := runtime.AttachSubFlowsToContext(subFlows, context.Background())
-		logicFlow := runtime.NewLogicflow(method.LogicMeta, ctx)
+		ctx := minions.AttachSubFlowsToContext(subFlows, context.Background())
+		logicFlow := minions.NewLogicflow(method.LogicMetas, ctx)
 
-		logicFlow.Jointers.GetSingleOutput().Connect(func(inputValue any, ctx context.Context) {
-			returnValue = inputValue
-		})
+		output := logicFlow.Jointers.GetSingleOutput()
 
+		if output != nil {
+			output.Connect(func(inputValue any, ctx context.Context) {
+				returnValue = inputValue
+			})
+		}
+
+		input := logicFlow.Jointers.GetSingleInput()
+		if input == nil {
+			panic("No input")
+		}
 		//后端args是map，前端是数组。后端无法保证参数顺序，前端无法获知参数名字
-		logicFlow.Jointers.GetSingleInput().Push(p.Args, ctx)
+		input.Push(p.Args, ctx)
 		return returnValue, nil
 	}
 }
