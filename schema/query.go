@@ -99,7 +99,7 @@ func (m *MetaProcessor) appendLogicFlowMethodsToFields(method *meta.MethodMeta, 
 func getSubFlowMetas(methodMetas []*meta.MethodMeta) *[]dsl.SubLogicFlowMeta {
 	subLogicFlows := []dsl.SubLogicFlowMeta{}
 	for _, method := range methodMetas {
-		if method.Type == shared.SUBMETHOD {
+		if method.OperateType == shared.SUBMETHOD {
 			subLogicFlows = append(subLogicFlows, dsl.SubLogicFlowMeta{Id: method.Uuid, LogicFlowMeta: method.LogicMetas})
 		}
 	}

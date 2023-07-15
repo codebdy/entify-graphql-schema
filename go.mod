@@ -16,13 +16,13 @@ require (
 )
 
 require (
-	github.com/codebdy/entify v0.0.14
-	github.com/codebdy/minions-go v0.0.2
-	github.com/dop251/goja v0.0.0-20230402114112-623f9dda9079
+	github.com/codebdy/entify v0.0.16
+	github.com/codebdy/minions-go v0.1.0
+	github.com/dop251/goja v0.0.0-20230707174833-636fdf960de1
 	github.com/graph-gophers/dataloader v5.0.0+incompatible
 	github.com/graphql-go/graphql v0.8.1
 )
 
-replace github.com/codebdy/entify v0.0.14 => ../entify
+//replace github.com/codebdy/entify v0.0.14 => ../entify
 
-replace github.com/codebdy/minions-go v0.0.2 => ../minions-go
+//replace github.com/codebdy/minions-go v0.0.2 => ../minions-go
