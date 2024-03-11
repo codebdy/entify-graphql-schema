@@ -1,10 +1,10 @@
 package schema
 
 import (
+	"github.com/codebdy/entify-core/model/graph"
+	"github.com/codebdy/entify-core/model/meta"
+	"github.com/codebdy/entify-core/shared"
 	"github.com/codebdy/entify-graphql-schema/resolve"
-	"github.com/codebdy/entify/model/graph"
-	"github.com/codebdy/entify/model/meta"
-	"github.com/codebdy/entify/shared"
 	"github.com/codebdy/minions-go/dsl"
 	"github.com/graphql-go/graphql"
 )

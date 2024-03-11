@@ -3,8 +3,8 @@ package parser
 import (
 	"fmt"
 
-	"github.com/codebdy/entify/model/graph"
-	"github.com/codebdy/entify/shared"
+	"github.com/codebdy/entify-core/model/graph"
+	"github.com/codebdy/entify-core/shared"
 	"github.com/graphql-go/graphql"
 )
 

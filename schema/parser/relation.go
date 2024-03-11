@@ -1,9 +1,9 @@
 package parser
 
 import (
-	"github.com/codebdy/entify"
+	"github.com/codebdy/entify-core"
+	"github.com/codebdy/entify-core/model/graph"
 	"github.com/codebdy/entify-graphql-schema/resolve"
-	"github.com/codebdy/entify/model/graph"
 	"github.com/graphql-go/graphql"
 )
 

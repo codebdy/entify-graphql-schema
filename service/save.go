@@ -3,7 +3,7 @@ package service
 import (
 	"log"
 
-	"github.com/codebdy/entify/orm"
+	"github.com/codebdy/entify-core/orm"
 )
 
 func (s *Service) Save(entityName string, objects []map[string]interface{}) ([]orm.InsanceData, error) {

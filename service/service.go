@@ -3,8 +3,8 @@ package service
 import (
 	"context"
 
-	"github.com/codebdy/entify"
-	"github.com/codebdy/entify/model/graph"
+	"github.com/codebdy/entify-core"
+	"github.com/codebdy/entify-core/model/graph"
 )
 
 type Service struct {

@@ -3,9 +3,9 @@ package service
 import (
 	"log"
 
-	"github.com/codebdy/entify/model/graph"
-	"github.com/codebdy/entify/orm"
-	"github.com/codebdy/entify/shared"
+	"github.com/codebdy/entify-core/model/graph"
+	"github.com/codebdy/entify-core/orm"
+	"github.com/codebdy/entify-core/shared"
 )
 
 func mergeWhereArgs(whereArgs, authArgs graph.QueryArg) graph.QueryArg {

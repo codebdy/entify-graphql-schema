@@ -4,10 +4,10 @@ import (
 	"context"
 	"log"
 
-	"github.com/codebdy/entify"
-	"github.com/codebdy/entify/model/observer"
-	"github.com/codebdy/entify/orm"
-	"github.com/codebdy/entify/shared"
+	"github.com/codebdy/entify-core"
+	"github.com/codebdy/entify-core/model/observer"
+	"github.com/codebdy/entify-core/orm"
+	"github.com/codebdy/entify-core/shared"
 )
 
 type EntifyService struct {

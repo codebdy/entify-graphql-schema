@@ -1,7 +1,7 @@
 package schema
 
 import (
-	"github.com/codebdy/entify"
+	"github.com/codebdy/entify-core"
 	"github.com/codebdy/entify-graphql-schema/schema/parser"
 	"github.com/graphql-go/graphql"
 )

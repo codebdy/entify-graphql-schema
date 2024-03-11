@@ -3,7 +3,7 @@ package parser
 import (
 	"log"
 
-	"github.com/codebdy/entify/model/meta"
+	"github.com/codebdy/entify-core/model/meta"
 	"github.com/graphql-go/graphql"
 )
 

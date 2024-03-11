@@ -4,11 +4,11 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/codebdy/entify"
+	"github.com/codebdy/entify-core"
 	"github.com/codebdy/entify-graphql-schema/service"
-	"github.com/codebdy/entify/model/graph"
+	"github.com/codebdy/entify-core/model/graph"
 
-	"github.com/codebdy/entify/shared"
+	"github.com/codebdy/entify-core/shared"
 	"github.com/graph-gophers/dataloader"
 	"github.com/graphql-go/graphql"
 )

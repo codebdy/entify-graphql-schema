@@ -3,11 +3,11 @@ package resolve
 import (
 	"log"
 
-	"github.com/codebdy/entify"
+	"github.com/codebdy/entify-core"
+	"github.com/codebdy/entify-core/model/data"
+	"github.com/codebdy/entify-core/model/observer"
+	"github.com/codebdy/entify-core/shared"
 	"github.com/codebdy/entify-graphql-schema/service"
-	"github.com/codebdy/entify/model/data"
-	"github.com/codebdy/entify/model/observer"
-	"github.com/codebdy/entify/shared"
 	"github.com/graphql-go/graphql"
 )
 
@@ -27,7 +27,7 @@ func PostResolveFn(entityName string, r *entify.Repository) graphql.FieldResolve
 	}
 }
 
-//未实现
+// 未实现
 func SetResolveFn(entityName string, r *entify.Repository) graphql.FieldResolveFn {
 	return func(p graphql.ResolveParams) (interface{}, error) {
 		defer shared.PrintErrorStack()

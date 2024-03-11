@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/codebdy/entify/model/meta"
-	"github.com/codebdy/entify/shared"
+	"github.com/codebdy/entify-core/model/meta"
+	"github.com/codebdy/entify-core/shared"
 	"github.com/graphql-go/graphql"
 )
 

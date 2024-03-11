@@ -1,8 +1,8 @@
 github.com/chzyer/logex v1.2.0/go.mod h1:9+9sk7u7pGNWYMkh0hdiL++6OeibzJccyQU4p4MedaY=
 github.com/chzyer/readline v1.5.0/go.mod h1:x22KAscuvRqlLoK9CsoYsmxoXZMMFVyOl86cAH8qUic=
 github.com/chzyer/test v0.0.0-20210722231415-061457976a23/go.mod h1:Q3SI9o4m/ZMnBNeIyt5eFwwo7qiLfzFZmjNmxjkiQlU=
-github.com/codebdy/entify v0.0.16 h1:9O5cyNAwwNiv6VpIibjF1iyA0QADn790mPZmQTX02kw=
-github.com/codebdy/entify v0.0.16/go.mod h1:OMsyP83d8v9ExF2LFm9bjE11LwQEx9PyekOmp+0cBkw=
+github.com/codebdy/entify-core v0.1.0 h1:j5c1IfPPsGAIrxo8mDhrLrgtnTJGDCVhKNuzDBTt3Gg=
+github.com/codebdy/entify-core v0.1.0/go.mod h1:eUiPFtfmq141dG3AaCM57lXhZ0N6X4TnepIVfjz7KWo=
 github.com/codebdy/minions-go v0.1.0 h1:J9oLOXHX1tflRwyhn6ETwQ1G+6wyTVeeyEyzOTVpffI=
 github.com/codebdy/minions-go v0.1.0/go.mod h1:CNQC+yeSfMbdgkY0N1T2ML5Ezv0CK+57Gd2/d67Vrx4=
 github.com/creack/pty v1.1.9/go.mod h1:oKZEueFk5CKHvIhNR5MUki03XCEU+Q6VDXinZuGJ33E=

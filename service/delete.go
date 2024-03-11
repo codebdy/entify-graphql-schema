@@ -3,7 +3,7 @@ package service
 import (
 	"log"
 
-	"github.com/codebdy/entify/shared"
+	"github.com/codebdy/entify-core/shared"
 )
 
 func (s *Service) DeleteInstances(entityName string, ids []shared.ID) (interface{}, error) {

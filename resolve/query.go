@@ -3,12 +3,12 @@ package resolve
 import (
 	"fmt"
 
-	"github.com/codebdy/entify"
+	"github.com/codebdy/entify-core"
+	"github.com/codebdy/entify-core/model"
+	"github.com/codebdy/entify-core/model/graph"
+	"github.com/codebdy/entify-core/model/meta"
+	"github.com/codebdy/entify-core/shared"
 	"github.com/codebdy/entify-graphql-schema/service"
-	"github.com/codebdy/entify/model"
-	"github.com/codebdy/entify/model/graph"
-	"github.com/codebdy/entify/model/meta"
-	"github.com/codebdy/entify/shared"
 	"github.com/graphql-go/graphql"
 )
 

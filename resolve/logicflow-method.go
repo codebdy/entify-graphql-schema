@@ -3,9 +3,9 @@ package resolve
 import (
 	"context"
 
-	"github.com/codebdy/entify"
-	"github.com/codebdy/entify/model/meta"
-	"github.com/codebdy/entify/shared"
+	"github.com/codebdy/entify-core"
+	"github.com/codebdy/entify-core/model/meta"
+	"github.com/codebdy/entify-core/shared"
 	"github.com/codebdy/minions-go"
 	"github.com/codebdy/minions-go/dsl"
 	"github.com/graphql-go/graphql"

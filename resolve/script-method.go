@@ -4,10 +4,10 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/codebdy/entify"
+	"github.com/codebdy/entify-core"
+	"github.com/codebdy/entify-core/model/meta"
+	"github.com/codebdy/entify-core/shared"
 	"github.com/codebdy/entify-graphql-schema/resolve/script"
-	"github.com/codebdy/entify/model/meta"
-	"github.com/codebdy/entify/shared"
 	"github.com/dop251/goja"
 	"github.com/graphql-go/graphql"
 )

@@ -16,7 +16,7 @@ require (
 )
 
 require (
-	github.com/codebdy/entify v0.0.16
+	github.com/codebdy/entify-core v0.1.0
 	github.com/codebdy/minions-go v0.1.0
 	github.com/dop251/goja v0.0.0-20230707174833-636fdf960de1
 	github.com/graph-gophers/dataloader v5.0.0+incompatible
