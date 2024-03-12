@@ -15,11 +15,11 @@ func (p *ModelParser) makeRelations(r *entify.Repository) {
 	// 	panic("Can find object type:" + intf.Name())
 	// }
 	// for _, association := range intf.AllAssociations() {
-	// 	if interfaceType.Fields()[association.Name()] != nil {
-	// 		panic("Duplicate interface field: " + intf.Name() + "." + association.Name())
+	// 	if interfaceType.Fields()[association.Name] != nil {
+	// 		panic("Duplicate interface field: " + intf.Name() + "." + association.Name)
 	// 	}
-	// 	interfaceType.AddFieldConfig(association.Name(), &graphql.Field{
-	// 		Name:        association.Name(),
+	// 	interfaceType.AddFieldConfig(association.Name, &graphql.Field{
+	// 		Name:        association.Name,
 	// 		Type:        p.AssociationType(association),
 	// 		Description: association.Description(),
 	// 		Resolve:     resolve.QueryAssociationFn(association, model),
@@ -31,11 +31,11 @@ func (p *ModelParser) makeRelations(r *entify.Repository) {
 		entity := p.model.Graph.Entities[i]
 		objectType := p.objectTypeMap[entity.Name()]
 		for _, association := range entity.Associations() {
-			if objectType.Fields()[association.Name()] != nil {
-				panic("Duplicate entity field: " + entity.Name() + "." + association.Name())
+			if objectType.Fields()[association.Name] != nil {
+				panic("Duplicate entity field: " + entity.Name() + "." + association.Name)
 			}
-			objectType.AddFieldConfig(association.Name(), &graphql.Field{
-				Name:        association.Name(),
+			objectType.AddFieldConfig(association.Name, &graphql.Field{
+				Name:        association.Name,
 				Type:        p.AssociationType(association),
 				Description: association.Description(),
 				Resolve:     resolve.QueryAssociationFn(association, r),

@@ -108,13 +108,13 @@ func (p *ModelParser) makeEntityInputRelations() {
 			arrayType := p.getAssociationType(assoc)
 
 			if arrayType == nil {
-				panic("Can not get association type:" + assoc.Owner().Name() + "." + assoc.Name())
+				panic("Can not get association type:" + assoc.Owner().Name() + "." + assoc.Name)
 			}
-			input.AddFieldConfig(assoc.Name(), &graphql.InputObjectFieldConfig{
+			input.AddFieldConfig(assoc.Name, &graphql.InputObjectFieldConfig{
 				Type:        arrayType,
 				Description: assoc.Description(),
 			})
-			update.AddFieldConfig(assoc.Name(), &graphql.InputObjectFieldConfig{
+			update.AddFieldConfig(assoc.Name, &graphql.InputObjectFieldConfig{
 				Type:        arrayType,
 				Description: assoc.Description(),
 			})
