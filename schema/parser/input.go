@@ -163,7 +163,23 @@ func (p *ModelParser) makeEntitySetInput(entity *graph.Entity) *graphql.InputObj
 }
 
 func (p *ModelParser) makeEntityMutationResponseType(entity *graph.Entity) *graphql.Object {
-	var returnValue *graphql.Object
+	var returnValue *graphql.Object = graphql.NewObject(
+		graphql.ObjectConfig{
+			Name: entity.Name() + shared.MUTATION_RESPONSE,
+			Fields: graphql.Fields{
+				shared.RESPONSE_AFFECTEDROWS: &graphql.Field{
+					Type: graphql.Int,
+				},
+				shared.RESPONSE_RETURNING: &graphql.Field{
+					Type: &graphql.NonNull{
+						OfType: &graphql.List{
+							OfType: p.OutputType(entity.Name()),
+						},
+					},
+				},
+			},
+		},
+	)
 
 	returnValue = graphql.NewObject(
 		graphql.ObjectConfig{

@@ -22,9 +22,9 @@ func (p *ModelParser) makeOneEntityArgs(entity *graph.Entity) {
 	p.makeOneArgs(entity.Name(), entity.AllAttributes())
 }
 
-func (p *ModelParser) makeOneThirdPartyArgs(third *graph.ThirdParty) {
-	p.makeOneArgs(third.Name(), third.Attributes())
-}
+// func (p *ModelParser) makeOneThirdPartyArgs(third *graph.ThirdParty) {
+// 	p.makeOneArgs(third.Name(), third.Attributes())
+// }
 
 func (p *ModelParser) makeOneInterfaceArgs(intf *graph.Interface) {
 	p.makeOneArgs(intf.Name(), intf.AllAttributes())
@@ -54,8 +54,7 @@ func (p *ModelParser) makeRelaionWhereExp() {
 		if entity == nil {
 			panic("Fatal error, can not find class by name:" + className)
 		}
-		var associations []*graph.Association
-		associations = entity.Associations()
+		var associations []*graph.Association = entity.Associations()
 		for i := range associations {
 			assoc := associations[i]
 			exp.AddFieldConfig(assoc.Name(), &graphql.InputObjectFieldConfig{

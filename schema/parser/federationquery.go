@@ -218,8 +218,7 @@ func inputFieldsToSDL(fields graphql.InputObjectFieldMap) string {
 
 func comparisonToSDL(comarison *graphql.InputObjectFieldConfig) string {
 	sdl := comparisonSDL
-	var comType *graphql.InputObject
-	comType = comarison.Type.(*graphql.InputObject)
+	var comType *graphql.InputObject = comarison.Type.(*graphql.InputObject)
 	return fmt.Sprintf(sdl, comType.Name(), inputFieldsToSDL(comType.Fields()))
 }
 
