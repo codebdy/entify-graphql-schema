@@ -10,8 +10,8 @@ func parseListFields(info graphql.ResolveInfo) []string {
 	fields := []string{}
 	if len(info.FieldASTs) > 0 {
 		nodesSelections := info.FieldASTs[0].SelectionSet.Selections
-		if len(nodesSelections) > 0 {
-			noesField, ok := nodesSelections[0].(*ast.Field)
+		for _, selection := range nodesSelections {
+			noesField, ok := selection.(*ast.Field)
 			if ok && noesField.Name.Value == consts.NODES {
 				for _, fieldSelection := range noesField.SelectionSet.Selections {
 					field, ok := fieldSelection.(*ast.Field)
