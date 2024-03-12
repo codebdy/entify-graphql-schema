@@ -258,7 +258,7 @@ var StringComparisonExp = graphql.InputObjectFieldConfig{
 func (p *ModelParser) EnumComparisonExp(attr *graph.Attribute) *graphql.InputObjectFieldConfig {
 	enumEntity := attr.EumnType
 	if enumEntity == nil {
-		panic("Can not find enum entity")
+		panic("Can not find enum entity, please check the attribute enum type. entity name: " + attr.EnityType.Name() + " attribute name: " + attr.Name)
 	}
 	if p.enumComparisonExpMap[enumEntity.Name] != nil {
 		return p.enumComparisonExpMap[enumEntity.Name]
