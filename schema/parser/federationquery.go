@@ -122,7 +122,7 @@ func (p *ModelParser) QuerySDL() (string, string) {
 func (p *ModelParser) makeEntitySDL(entity *graph.Entity) string {
 	sdl := ""
 	sdl = sdl + fmt.Sprintf(queryFieldSDL,
-		entity.QueryName(),
+		entity.QueryListName(),
 		makeArgsSDL(p.QueryArgs(entity.Name())),
 		p.EntityListType(entity).String(),
 	)

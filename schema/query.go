@@ -66,10 +66,10 @@ func (m *MetaProcessor) EntityQueryResponseType(entity *graph.Entity) graphql.Ou
 // }
 
 func (m *MetaProcessor) appendEntityToQueryFields(entity *graph.Entity, fields graphql.Fields) {
-	(fields)[entity.QueryName()] = &graphql.Field{
+	(fields)[entity.QueryListName()] = &graphql.Field{
 		Type:    m.EntityQueryResponseType(entity),
 		Args:    m.modelParser.QueryArgs(entity.Name()),
-		Resolve: resolve.QueryEntityResolveFn(entity.Name(), m.Repo),
+		Resolve: resolve.QueryEntityListResolveFn(entity.Name(), m.Repo),
 	}
 	(fields)[entity.QueryOneName()] = &graphql.Field{
 		Type:    m.modelParser.OutputType(entity.Name()),

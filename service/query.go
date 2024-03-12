@@ -25,7 +25,7 @@ func mergeWhereArgs(whereArgs, authArgs graph.QueryArg) graph.QueryArg {
 	}
 }
 
-func (s *Service) QueryEntity(entityName string, args graph.QueryArg, fieldNames []string) orm.QueryResponse {
+func (s *Service) QueryEntityList(entityName string, args graph.QueryArg, fieldNames []string) orm.QueryResponse {
 	canRead, authArgs := s.canReadEntity(entityName)
 	if !canRead {
 		log.Panic("No access")

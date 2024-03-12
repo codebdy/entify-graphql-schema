@@ -32,7 +32,7 @@ func SetResolveFn(entityName string, r *entify.Repository) graphql.FieldResolveF
 	return func(p graphql.ResolveParams) (interface{}, error) {
 		defer shared.PrintErrorStack()
 		// s := service.New(p.Context, r)
-		// objs := s.QueryEntity(entityName, p.Args, []string{}).Nodes
+		// objs := s.QueryEntityList(entityName, p.Args, []string{}).Nodes
 		// convertedObjs := objs
 		//instances := []*data.Instance{}
 
@@ -91,7 +91,7 @@ func DeleteResolveFn(entityName string, r *entify.Repository) graphql.FieldResol
 	return func(p graphql.ResolveParams) (interface{}, error) {
 		defer shared.PrintErrorStack()
 		s := service.New(p.Context, r)
-		objs := s.QueryEntity(entityName, p.Args, []string{shared.ID_NAME}).Nodes
+		objs := s.QueryEntityList(entityName, p.Args, []string{shared.ID_NAME}).Nodes
 
 		if objs == nil || len(objs) == 0 {
 			return map[string]interface{}{

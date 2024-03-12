@@ -21,12 +21,12 @@ func QueryOneEntityResolveFn(entityName string, r *entify.Repository) graphql.Fi
 	}
 }
 
-func QueryEntityResolveFn(entityName string, r *entify.Repository) graphql.FieldResolveFn {
+func QueryEntityListResolveFn(entityName string, r *entify.Repository) graphql.FieldResolveFn {
 	return func(p graphql.ResolveParams) (interface{}, error) {
 		defer shared.PrintErrorStack()
 		s := service.New(p.Context, r)
 		fields := parseListFields(p.Info)
-		result := s.QueryEntity(entityName, p.Args, fields)
+		result := s.QueryEntityList(entityName, p.Args, fields)
 		return result, nil
 	}
 }
