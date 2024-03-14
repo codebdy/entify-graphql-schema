@@ -3,7 +3,7 @@ package parser
 import (
 	"github.com/codebdy/entify-core/model/graph"
 	"github.com/codebdy/entify-core/model/meta"
-	"github.com/codebdy/entify-graphql-schema/consts"
+	"github.com/codebdy/entify-core/shared"
 	"github.com/codebdy/entify-graphql-schema/resolve"
 	"github.com/graphql-go/graphql"
 )
@@ -48,15 +48,15 @@ func (p *ModelParser) EntityListType(entity *graph.Entity) *graphql.Object {
 		graphql.ObjectConfig{
 			Name: listName,
 			Fields: graphql.Fields{
-				consts.NODES: &graphql.Field{
+				shared.NODES: &graphql.Field{
 					Type: &graphql.List{
 						OfType: p.OutputType(name),
 					},
 				},
-				consts.TOTAL: &graphql.Field{
+				shared.TOTAL: &graphql.Field{
 					Type: graphql.Int,
 				},
-				consts.AGGREGATE: &graphql.Field{
+				shared.AGGREGATE: &graphql.Field{
 					Type: p.aggregateType(entity),
 				},
 			},

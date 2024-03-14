@@ -4,7 +4,7 @@ import (
 	"github.com/codebdy/entify-core/model/domain"
 	"github.com/codebdy/entify-core/model/graph"
 	"github.com/codebdy/entify-core/model/meta"
-	"github.com/codebdy/entify-graphql-schema/consts"
+	"github.com/codebdy/entify-core/shared"
 	"github.com/graphql-go/graphql"
 )
 
@@ -291,12 +291,12 @@ func (p *ModelParser) AggregateFields(name string, attrs []*graph.Attribute, met
 			},
 		)
 		p.selectColumnsMap[selectColumnName] = selectColumn
-		fields[consts.ARG_COUNT] = &graphql.Field{
+		fields[shared.ARG_COUNT] = &graphql.Field{
 			Args: graphql.FieldConfigArgument{
-				consts.ARG_COLUMNS: &graphql.ArgumentConfig{
+				shared.ARG_COLUMNS: &graphql.ArgumentConfig{
 					Type: selectColumn,
 				},
-				consts.ARG_DISTINCT: &graphql.ArgumentConfig{
+				shared.ARG_DISTINCT: &graphql.ArgumentConfig{
 					Type: graphql.Boolean,
 				},
 			},
@@ -396,7 +396,7 @@ func (p *ModelParser) aggregateType(entity *graph.Entity) *graphql.Object {
 
 	obj := graphql.NewObject(
 		graphql.ObjectConfig{
-			Name:   aggregateName + consts.FIELDS,
+			Name:   aggregateName + shared.FIELDS,
 			Fields: aggregateFields,
 		},
 	)

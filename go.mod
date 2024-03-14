@@ -4,7 +4,6 @@ go 1.18
 
 require (
 	github.com/dlclark/regexp2 v1.7.0 // indirect
-	github.com/gertd/go-pluralize v0.2.1 // indirect
 	github.com/go-sourcemap/sourcemap v2.1.3+incompatible // indirect
 	github.com/go-sql-driver/mysql v1.7.0 // indirect
 	github.com/google/pprof v0.0.0-20230207041349-798e818bf904 // indirect

@@ -2,7 +2,7 @@ package parser
 
 import (
 	"github.com/codebdy/entify-core/model/graph"
-	"github.com/codebdy/entify-graphql-schema/consts"
+	"github.com/codebdy/entify-core/shared"
 	"github.com/graphql-go/graphql"
 )
 
@@ -11,31 +11,31 @@ var BooleanComparisonExp = graphql.InputObjectFieldConfig{
 		graphql.InputObjectConfig{
 			Name: "BooleanComparisonExp",
 			Fields: graphql.InputObjectConfigFieldMap{
-				consts.ARG_EQ: &graphql.InputObjectFieldConfig{
+				shared.ARG_EQ: &graphql.InputObjectFieldConfig{
 					Type: graphql.Boolean,
 				},
-				consts.ARG_GT: &graphql.InputObjectFieldConfig{
+				shared.ARG_GT: &graphql.InputObjectFieldConfig{
 					Type: graphql.Boolean,
 				},
-				consts.ARG_GTE: &graphql.InputObjectFieldConfig{
+				shared.ARG_GTE: &graphql.InputObjectFieldConfig{
 					Type: graphql.Boolean,
 				},
-				consts.ARG_IN: &graphql.InputObjectFieldConfig{
+				shared.ARG_IN: &graphql.InputObjectFieldConfig{
 					Type: graphql.NewList(graphql.Boolean),
 				},
-				consts.ARG_ISNULL: &graphql.InputObjectFieldConfig{
+				shared.ARG_ISNULL: &graphql.InputObjectFieldConfig{
 					Type: graphql.Boolean,
 				},
-				consts.ARG_LT: &graphql.InputObjectFieldConfig{
+				shared.ARG_LT: &graphql.InputObjectFieldConfig{
 					Type: graphql.Boolean,
 				},
-				consts.ARG_LTE: &graphql.InputObjectFieldConfig{
+				shared.ARG_LTE: &graphql.InputObjectFieldConfig{
 					Type: graphql.Boolean,
 				},
-				consts.ARG_NOTEQ: &graphql.InputObjectFieldConfig{
+				shared.ARG_NOTEQ: &graphql.InputObjectFieldConfig{
 					Type: graphql.Boolean,
 				},
-				consts.ARG_NOTIN: &graphql.InputObjectFieldConfig{
+				shared.ARG_NOTIN: &graphql.InputObjectFieldConfig{
 					Type: graphql.NewList(graphql.Boolean),
 				},
 			},
@@ -48,31 +48,34 @@ var DateTimeComparisonExp = graphql.InputObjectFieldConfig{
 		graphql.InputObjectConfig{
 			Name: "DateTimeComparisonExp",
 			Fields: graphql.InputObjectConfigFieldMap{
-				consts.ARG_EQ: &graphql.InputObjectFieldConfig{
+				shared.ARG_EQ: &graphql.InputObjectFieldConfig{
 					Type: graphql.DateTime,
 				},
-				consts.ARG_GT: &graphql.InputObjectFieldConfig{
+				shared.ARG_GT: &graphql.InputObjectFieldConfig{
 					Type: graphql.DateTime,
 				},
-				consts.ARG_GTE: &graphql.InputObjectFieldConfig{
+				shared.ARG_GTE: &graphql.InputObjectFieldConfig{
 					Type: graphql.DateTime,
 				},
-				consts.ARG_IN: &graphql.InputObjectFieldConfig{
+				shared.ARG_IN: &graphql.InputObjectFieldConfig{
 					Type: graphql.NewList(graphql.DateTime),
 				},
-				consts.ARG_ISNULL: &graphql.InputObjectFieldConfig{
+				shared.ARG_ISNULL: &graphql.InputObjectFieldConfig{
 					Type: graphql.Boolean,
 				},
-				consts.ARG_LT: &graphql.InputObjectFieldConfig{
+				shared.ARG_ISNOTNULL: &graphql.InputObjectFieldConfig{
+					Type: graphql.Boolean,
+				},
+				shared.ARG_LT: &graphql.InputObjectFieldConfig{
 					Type: graphql.DateTime,
 				},
-				consts.ARG_LTE: &graphql.InputObjectFieldConfig{
+				shared.ARG_LTE: &graphql.InputObjectFieldConfig{
 					Type: graphql.DateTime,
 				},
-				consts.ARG_NOTEQ: &graphql.InputObjectFieldConfig{
+				shared.ARG_NOTEQ: &graphql.InputObjectFieldConfig{
 					Type: graphql.DateTime,
 				},
-				consts.ARG_NOTIN: &graphql.InputObjectFieldConfig{
+				shared.ARG_NOTIN: &graphql.InputObjectFieldConfig{
 					Type: graphql.NewList(graphql.DateTime),
 				},
 			},
@@ -85,31 +88,34 @@ var FloatComparisonExp = graphql.InputObjectFieldConfig{
 		graphql.InputObjectConfig{
 			Name: "FloatComparisonExp",
 			Fields: graphql.InputObjectConfigFieldMap{
-				consts.ARG_EQ: &graphql.InputObjectFieldConfig{
+				shared.ARG_EQ: &graphql.InputObjectFieldConfig{
 					Type: graphql.Float,
 				},
-				consts.ARG_GT: &graphql.InputObjectFieldConfig{
+				shared.ARG_GT: &graphql.InputObjectFieldConfig{
 					Type: graphql.Float,
 				},
-				consts.ARG_GTE: &graphql.InputObjectFieldConfig{
+				shared.ARG_GTE: &graphql.InputObjectFieldConfig{
 					Type: graphql.Float,
 				},
-				consts.ARG_IN: &graphql.InputObjectFieldConfig{
+				shared.ARG_IN: &graphql.InputObjectFieldConfig{
 					Type: graphql.NewList(graphql.Float),
 				},
-				consts.ARG_ISNULL: &graphql.InputObjectFieldConfig{
+				shared.ARG_ISNULL: &graphql.InputObjectFieldConfig{
 					Type: graphql.Boolean,
 				},
-				consts.ARG_LT: &graphql.InputObjectFieldConfig{
+				shared.ARG_ISNOTNULL: &graphql.InputObjectFieldConfig{
+					Type: graphql.Boolean,
+				},
+				shared.ARG_LT: &graphql.InputObjectFieldConfig{
 					Type: graphql.Float,
 				},
-				consts.ARG_LTE: &graphql.InputObjectFieldConfig{
+				shared.ARG_LTE: &graphql.InputObjectFieldConfig{
 					Type: graphql.Float,
 				},
-				consts.ARG_NOTEQ: &graphql.InputObjectFieldConfig{
+				shared.ARG_NOTEQ: &graphql.InputObjectFieldConfig{
 					Type: graphql.Float,
 				},
-				consts.ARG_NOTIN: &graphql.InputObjectFieldConfig{
+				shared.ARG_NOTIN: &graphql.InputObjectFieldConfig{
 					Type: graphql.NewList(graphql.Float),
 				},
 			},
@@ -122,31 +128,34 @@ var IntComparisonExp = graphql.InputObjectFieldConfig{
 		graphql.InputObjectConfig{
 			Name: "IntComparisonExp",
 			Fields: graphql.InputObjectConfigFieldMap{
-				consts.ARG_EQ: &graphql.InputObjectFieldConfig{
+				shared.ARG_EQ: &graphql.InputObjectFieldConfig{
 					Type: graphql.Int,
 				},
-				consts.ARG_GT: &graphql.InputObjectFieldConfig{
+				shared.ARG_GT: &graphql.InputObjectFieldConfig{
 					Type: graphql.Int,
 				},
-				consts.ARG_GTE: &graphql.InputObjectFieldConfig{
+				shared.ARG_GTE: &graphql.InputObjectFieldConfig{
 					Type: graphql.Int,
 				},
-				consts.ARG_IN: &graphql.InputObjectFieldConfig{
+				shared.ARG_IN: &graphql.InputObjectFieldConfig{
 					Type: graphql.NewList(graphql.Int),
 				},
-				consts.ARG_ISNULL: &graphql.InputObjectFieldConfig{
+				shared.ARG_ISNULL: &graphql.InputObjectFieldConfig{
 					Type: graphql.Boolean,
 				},
-				consts.ARG_LT: &graphql.InputObjectFieldConfig{
+				shared.ARG_ISNOTNULL: &graphql.InputObjectFieldConfig{
+					Type: graphql.Boolean,
+				},
+				shared.ARG_LT: &graphql.InputObjectFieldConfig{
 					Type: graphql.Int,
 				},
-				consts.ARG_LTE: &graphql.InputObjectFieldConfig{
+				shared.ARG_LTE: &graphql.InputObjectFieldConfig{
 					Type: graphql.Int,
 				},
-				consts.ARG_NOTEQ: &graphql.InputObjectFieldConfig{
+				shared.ARG_NOTEQ: &graphql.InputObjectFieldConfig{
 					Type: graphql.Int,
 				},
-				consts.ARG_NOTIN: &graphql.InputObjectFieldConfig{
+				shared.ARG_NOTIN: &graphql.InputObjectFieldConfig{
 					Type: graphql.NewList(graphql.Int),
 				},
 			},
@@ -159,29 +168,35 @@ var IdComparisonExp = graphql.InputObjectFieldConfig{
 		graphql.InputObjectConfig{
 			Name: "IdComparisonExp",
 			Fields: graphql.InputObjectConfigFieldMap{
-				consts.ARG_EQ: &graphql.InputObjectFieldConfig{
+				shared.ARG_EQ: &graphql.InputObjectFieldConfig{
 					Type: graphql.ID,
 				},
-				consts.ARG_GT: &graphql.InputObjectFieldConfig{
+				shared.ARG_GT: &graphql.InputObjectFieldConfig{
 					Type: graphql.ID,
 				},
-				consts.ARG_GTE: &graphql.InputObjectFieldConfig{
+				shared.ARG_GTE: &graphql.InputObjectFieldConfig{
 					Type: graphql.ID,
 				},
-				consts.ARG_IN: &graphql.InputObjectFieldConfig{
+				shared.ARG_IN: &graphql.InputObjectFieldConfig{
 					Type: graphql.NewList(graphql.ID),
 				},
-				consts.ARG_LT: &graphql.InputObjectFieldConfig{
+				shared.ARG_LT: &graphql.InputObjectFieldConfig{
 					Type: graphql.ID,
 				},
-				consts.ARG_LTE: &graphql.InputObjectFieldConfig{
+				shared.ARG_LTE: &graphql.InputObjectFieldConfig{
 					Type: graphql.ID,
 				},
-				consts.ARG_NOTEQ: &graphql.InputObjectFieldConfig{
+				shared.ARG_NOTEQ: &graphql.InputObjectFieldConfig{
 					Type: graphql.ID,
 				},
-				consts.ARG_NOTIN: &graphql.InputObjectFieldConfig{
+				shared.ARG_NOTIN: &graphql.InputObjectFieldConfig{
 					Type: graphql.NewList(graphql.ID),
+				},
+				shared.ARG_ISNULL: &graphql.InputObjectFieldConfig{
+					Type: graphql.Boolean,
+				},
+				shared.ARG_ISNOTNULL: &graphql.InputObjectFieldConfig{
+					Type: graphql.Boolean,
 				},
 			},
 		},
@@ -193,61 +208,61 @@ var StringComparisonExp = graphql.InputObjectFieldConfig{
 		graphql.InputObjectConfig{
 			Name: "StringComparisonExp",
 			Fields: graphql.InputObjectConfigFieldMap{
-				consts.ARG_EQ: &graphql.InputObjectFieldConfig{
+				shared.ARG_EQ: &graphql.InputObjectFieldConfig{
 					Type: graphql.String,
 				},
-				consts.ARG_GT: &graphql.InputObjectFieldConfig{
+				shared.ARG_GT: &graphql.InputObjectFieldConfig{
 					Type: graphql.String,
 				},
-				consts.ARG_GTE: &graphql.InputObjectFieldConfig{
+				shared.ARG_GTE: &graphql.InputObjectFieldConfig{
 					Type: graphql.String,
 				},
-				consts.ARG_ILIKE: &graphql.InputObjectFieldConfig{
+				shared.ARG_ILIKE: &graphql.InputObjectFieldConfig{
 					Type: graphql.String,
 				},
-				consts.ARG_IN: &graphql.InputObjectFieldConfig{
+				shared.ARG_IN: &graphql.InputObjectFieldConfig{
 					Type: graphql.NewList(graphql.String),
 				},
-				// consts.ARG_IREGEX: &graphql.InputObjectFieldConfig{
+				// shared.ARG_IREGEX: &graphql.InputObjectFieldConfig{
 				// 	Type: graphql.String,
 				// },
-				consts.ARG_ISNULL: &graphql.InputObjectFieldConfig{
+				shared.ARG_ISNULL: &graphql.InputObjectFieldConfig{
 					Type: graphql.Boolean,
 				},
-				consts.ARG_LIKE: &graphql.InputObjectFieldConfig{
+				shared.ARG_LIKE: &graphql.InputObjectFieldConfig{
 					Type: graphql.String,
 				},
-				consts.ARG_LT: &graphql.InputObjectFieldConfig{
+				shared.ARG_LT: &graphql.InputObjectFieldConfig{
 					Type: graphql.String,
 				},
-				consts.ARG_LTE: &graphql.InputObjectFieldConfig{
+				shared.ARG_LTE: &graphql.InputObjectFieldConfig{
 					Type: graphql.String,
 				},
-				consts.ARG_NOTEQ: &graphql.InputObjectFieldConfig{
+				shared.ARG_NOTEQ: &graphql.InputObjectFieldConfig{
 					Type: graphql.String,
 				},
-				consts.ARG_NOTILIKE: &graphql.InputObjectFieldConfig{
+				shared.ARG_NOTILIKE: &graphql.InputObjectFieldConfig{
 					Type: graphql.String,
 				},
-				consts.ARG_NOTIN: &graphql.InputObjectFieldConfig{
+				shared.ARG_NOTIN: &graphql.InputObjectFieldConfig{
 					Type: graphql.NewList(graphql.String),
 				},
-				// consts.ARG_NOTIREGEX: &graphql.InputObjectFieldConfig{
+				// shared.ARG_NOTIREGEX: &graphql.InputObjectFieldConfig{
 				// 	Type: graphql.String,
 				// },
-				consts.ARG_NOTLIKE: &graphql.InputObjectFieldConfig{
+				shared.ARG_NOTLIKE: &graphql.InputObjectFieldConfig{
 					Type: graphql.String,
 				},
-				consts.ARG_NOTREGEX: &graphql.InputObjectFieldConfig{
+				shared.ARG_NOTREGEX: &graphql.InputObjectFieldConfig{
 					Type: graphql.String,
 				},
-				// consts.ARG_NOTSIMILAR: &graphql.InputObjectFieldConfig{
+				// shared.ARG_NOTSIMILAR: &graphql.InputObjectFieldConfig{
 				// 	Type: graphql.String,
 				// },
-				consts.ARG_REGEX: &graphql.InputObjectFieldConfig{
+				shared.ARG_REGEX: &graphql.InputObjectFieldConfig{
 					Type: graphql.String,
 				},
-				// consts.ARG_SIMILAR: &graphql.InputObjectFieldConfig{
+				// shared.ARG_SIMILAR: &graphql.InputObjectFieldConfig{
 				// 	Type: graphql.String,
 				// },
 			},
@@ -269,19 +284,19 @@ func (p *ModelParser) EnumComparisonExp(attr *graph.Attribute) *graphql.InputObj
 			graphql.InputObjectConfig{
 				Name: enumEntity.Name + "EnumComparisonExp",
 				Fields: graphql.InputObjectConfigFieldMap{
-					consts.ARG_EQ: &graphql.InputObjectFieldConfig{
+					shared.ARG_EQ: &graphql.InputObjectFieldConfig{
 						Type: enumType,
 					},
-					consts.ARG_IN: &graphql.InputObjectFieldConfig{
+					shared.ARG_IN: &graphql.InputObjectFieldConfig{
 						Type: graphql.NewList(enumType),
 					},
-					consts.ARG_ISNULL: &graphql.InputObjectFieldConfig{
+					shared.ARG_ISNULL: &graphql.InputObjectFieldConfig{
 						Type: graphql.Boolean,
 					},
-					consts.ARG_NOTEQ: &graphql.InputObjectFieldConfig{
+					shared.ARG_NOTEQ: &graphql.InputObjectFieldConfig{
 						Type: enumType,
 					},
-					consts.ARG_NOTIN: &graphql.InputObjectFieldConfig{
+					shared.ARG_NOTIN: &graphql.InputObjectFieldConfig{
 						Type: graphql.NewList(enumType),
 					},
 				},

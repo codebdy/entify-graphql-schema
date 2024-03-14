@@ -2,7 +2,7 @@ package parser
 
 import (
 	"github.com/codebdy/entify-core/model/graph"
-	"github.com/codebdy/entify-graphql-schema/consts"
+	"github.com/codebdy/entify-core/shared"
 	"github.com/graphql-go/graphql"
 )
 
@@ -65,15 +65,15 @@ func (p *ModelParser) makeRelaionWhereExp() {
 }
 
 func (p *ModelParser) makeWhereExp(name string, attrs []*graph.Attribute) *graphql.InputObject {
-	expName := name + consts.BOOLEXP
+	expName := name + shared.BOOLEXP
 	andExp := graphql.InputObjectFieldConfig{}
 	notExp := graphql.InputObjectFieldConfig{}
 	orExp := graphql.InputObjectFieldConfig{}
 
 	fields := graphql.InputObjectConfigFieldMap{
-		consts.ARG_AND: &andExp,
-		consts.ARG_NOT: &notExp,
-		consts.ARG_OR:  &orExp,
+		shared.ARG_AND: &andExp,
+		shared.ARG_NOT: &notExp,
+		shared.ARG_OR:  &orExp,
 	}
 
 	boolExp := graphql.NewInputObject(
@@ -110,7 +110,7 @@ func (p *ModelParser) makeOrderBy(name string, attrs []*graph.Attribute) *graphq
 
 	orderByExp := graphql.NewInputObject(
 		graphql.InputObjectConfig{
-			Name:   name + consts.ORDERBY,
+			Name:   name + shared.ORDERBY,
 			Fields: fields,
 		},
 	)
@@ -136,7 +136,7 @@ func (p *ModelParser) makeDistinctOnEnum(name string, attrs []*graph.Attribute) 
 
 	entEnum := graphql.NewEnum(
 		graphql.EnumConfig{
-			Name:   name + consts.DISTINCTEXP,
+			Name:   name + shared.DISTINCTEXP,
 			Values: enumValueConfigMap,
 		},
 	)
@@ -145,23 +145,23 @@ func (p *ModelParser) makeDistinctOnEnum(name string, attrs []*graph.Attribute) 
 
 func (p *ModelParser) QueryArgs(name string) graphql.FieldConfigArgument {
 	config := graphql.FieldConfigArgument{
-		consts.ARG_DISTINCTON: &graphql.ArgumentConfig{
+		shared.ARG_DISTINCTON: &graphql.ArgumentConfig{
 			Type: p.DistinctOnEnum(name),
 		},
-		consts.ARG_LIMIT: &graphql.ArgumentConfig{
+		shared.ARG_LIMIT: &graphql.ArgumentConfig{
 			Type: graphql.Int,
 		},
-		consts.ARG_OFFSET: &graphql.ArgumentConfig{
+		shared.ARG_OFFSET: &graphql.ArgumentConfig{
 			Type: graphql.Int,
 		},
-		consts.ARG_WHERE: &graphql.ArgumentConfig{
+		shared.ARG_WHERE: &graphql.ArgumentConfig{
 			Type: p.WhereExp(name),
 		},
 	}
 	orderByExp := p.OrderByExp(name)
 
 	if orderByExp != nil {
-		config[consts.ARG_ORDERBY] = &graphql.ArgumentConfig{
+		config[shared.ARG_ORDERBY] = &graphql.ArgumentConfig{
 			Type: &graphql.List{OfType: orderByExp},
 		}
 	}

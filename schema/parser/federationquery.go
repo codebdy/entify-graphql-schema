@@ -7,7 +7,6 @@ import (
 	"github.com/codebdy/entify-core/model/graph"
 	"github.com/codebdy/entify-core/model/meta"
 	"github.com/codebdy/entify-core/shared"
-	"github.com/codebdy/entify-graphql-schema/consts"
 	"github.com/graphql-go/graphql"
 )
 
@@ -103,7 +102,7 @@ func (p *ModelParser) QuerySDL() (string, string) {
 
 		for key := range aggregate.Fields() {
 			field := aggregate.Fields()[key]
-			if field.Name != consts.ARG_COUNT {
+			if field.Name != shared.ARG_COUNT {
 				types = types + objectToSDL(field.Type.(*graphql.Object), false)
 			}
 		}
